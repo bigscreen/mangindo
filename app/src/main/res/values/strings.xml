@@ -2,4 +2,9 @@
     <string name="app_name">Mangindo</string>
 
     <string name="chapter_">Chapter %s</string>
+    <string name="page_">Page %d</string>
+
+    <string name="_chapter">%s Chapter</string>
+
+    <string formatted="true" name="manga_page_index">Page %1$d/%2$d</string>
 </resources>

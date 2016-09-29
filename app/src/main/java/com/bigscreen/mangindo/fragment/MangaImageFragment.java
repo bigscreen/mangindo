@@ -49,7 +49,7 @@ public class MangaImageFragment extends Fragment implements View.OnClickListener
         Log.d(Constant.LOG_TAG, "imageUrl= " + imageUrl);
         Log.d(Constant.LOG_TAG, "encodedImageUrl= " + Utils.getEncodedUrl(imageUrl));
         Glide.with(getContext()).load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(imageManga);
     }
 

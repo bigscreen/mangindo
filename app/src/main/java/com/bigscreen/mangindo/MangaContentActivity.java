@@ -38,6 +38,8 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
 
     private MangaContentListLoader mangaContentListLoader;
 
+    private int pageSize;
+
     @Inject
     MangaApiService apiService;
 
@@ -67,7 +69,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(mangaTitle);
-            getSupportActionBar().setSubtitle(chapterKey);
+            getSupportActionBar().setSubtitle(String.format(getString(R.string.page_), 1));
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setBackgroundDrawable(getTransparentColor());
@@ -75,6 +77,23 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
 
         pagerMangaImages.setAdapter(pagerAdapter);
         mangaContentListLoader.loadContentList(mangaKey, chapterKey);
+
+        pagerMangaImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                getSupportActionBar().setSubtitle(String.format(getString(R.string.manga_page_index), (position + 1), pageSize));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -109,16 +128,18 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
     }
 
     private void setContent(List<MangaImage> mangaImages) {
+        pageSize = mangaImages.size();
         List<MangaImageFragment> fragments = new ArrayList<>();
         for (MangaImage mangaImage : mangaImages) {
             fragments.add(MangaImageFragment.getInstance(mangaImage.getUrl()));
         }
         pagerAdapter.setFragments(fragments);
+        getSupportActionBar().setSubtitle(String.format(getString(R.string.manga_page_index), 1, pageSize));
     }
 
     private ColorDrawable getTransparentColor() {
         ColorDrawable actionBarColor = new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary));
-        actionBarColor.setAlpha(75);
+        actionBarColor.setAlpha(80);
         return actionBarColor;
     }
 
