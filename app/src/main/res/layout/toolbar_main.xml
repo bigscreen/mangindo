@@ -1,0 +1,18 @@
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    toolbar:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    toolbar:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <com.bigscreen.mangindo.custom.CustomTextView
+        android:id="@+id/text_main_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="50sp" />
+
+</android.support.v7.widget.Toolbar>

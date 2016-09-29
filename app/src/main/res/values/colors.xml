@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#212121</color>
+    <color name="colorPrimaryDark">#181818</color>
+    <color name="colorAccent">#b72d2d</color>
+    <color name="windowBackground">#f2f1f1</color>
+    <color name="textColor">#4d4d4d</color>
+    <color name="textColorLight">#686767</color>
+    <color name="listDivider">#d7595959</color>
+
+    <color name="blackOverlay">#a0212121</color>
+    <color name="white">#fff</color>
+    <color name="whiteTransparent">#c3ffffff</color>
+</resources>
