@@ -1,5 +1,6 @@
 package com.bigscreen.mangindo.network.service;
 
+import com.bigscreen.mangindo.network.NetworkError;
 import com.bigscreen.mangindo.network.model.response.ChapterListResponse;
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse;
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse;
@@ -37,7 +38,7 @@ public class MangaApiService {
 
                     @Override
                     public void onError(Throwable e) {
-                        callback.onError(e.getMessage());
+                        callback.onError(new NetworkError(e));
                     }
 
                     @Override
@@ -65,7 +66,7 @@ public class MangaApiService {
 
                     @Override
                     public void onError(Throwable e) {
-                        callback.onError(e.getMessage());
+                        callback.onError(new NetworkError(e));
                     }
 
                     @Override
@@ -93,7 +94,7 @@ public class MangaApiService {
 
                     @Override
                     public void onError(Throwable e) {
-                        callback.onError(e.getMessage());
+                        callback.onError(new NetworkError(e));
                     }
 
                     @Override
@@ -106,19 +107,19 @@ public class MangaApiService {
     public interface LoadMangaListCallback {
         void onSuccess(NewReleaseResponse response);
 
-        void onError(String errorMessage);
+        void onError(NetworkError networkError);
     }
 
     public interface LoadChapterListCallback {
         void onSuccess(ChapterListResponse response);
 
-        void onError(String errorMessage);
+        void onError(NetworkError networkError);
     }
 
     public interface LoadMangaContentListCallback {
         void onSuccess(MangaContentListResponse response);
 
-        void onError(String errorMessage);
+        void onError(NetworkError networkError);
     }
 
 }

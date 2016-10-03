@@ -1,5 +1,6 @@
 package com.bigscreen.mangindo.network.loader;
 
+import com.bigscreen.mangindo.network.NetworkError;
 import com.bigscreen.mangindo.network.model.MangaImage;
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;
@@ -34,8 +35,8 @@ public class MangaContentListLoader {
             }
 
             @Override
-            public void onError(String errorMessage) {
-                onLoadMangaContentListListener.onFailedLoadData(errorMessage);
+            public void onError(NetworkError networkError) {
+                onLoadMangaContentListListener.onFailedLoadData(networkError.getErrorMessage());
             }
         });
         subscriptions.add(subscription);

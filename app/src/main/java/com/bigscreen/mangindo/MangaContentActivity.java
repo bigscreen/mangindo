@@ -1,5 +1,6 @@
 package com.bigscreen.mangindo;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
     private MangaContentListLoader mangaContentListLoader;
 
     private int pageSize;
+    private String mangaKey = "", mangaTitle = "", chapterKey = "";
 
     @Inject
     MangaApiService apiService;
@@ -49,7 +51,6 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
         getAppDeps().inject(this);
         setContentView(R.layout.activity_manga_content);
 
-        String mangaKey = "", mangaTitle = "", chapterKey = "";
         if (getIntent().hasExtra(IntentKey.MANGA_KEY) && getIntent().hasExtra(IntentKey.MANGA_TITLE)
                 && getIntent().hasExtra(IntentKey.CHAPTER_KEY)) {
             mangaKey = getIntent().getStringExtra(IntentKey.MANGA_KEY);
@@ -125,6 +126,12 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
     @Override
     public void onFailedLoadData(String message) {
         progressLoading.setVisibility(View.GONE);
+        showAlert("Error", message, "Reload", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mangaContentListLoader.loadContentList(mangaKey, chapterKey);
+            }
+        });
     }
 
     private void setContent(List<MangaImage> mangaImages) {

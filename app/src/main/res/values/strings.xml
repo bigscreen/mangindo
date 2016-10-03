@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Mangindo</string>
+    <string name="search">Search</string>
+    <string name="sort_by">Sort by</string>
 
     <string name="chapter_">Chapter %s</string>
     <string name="page_">Page %d</string>

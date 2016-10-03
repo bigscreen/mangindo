@@ -1,5 +1,6 @@
 package com.bigscreen.mangindo.network.loader;
 
+import com.bigscreen.mangindo.network.NetworkError;
 import com.bigscreen.mangindo.network.model.response.ChapterListResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;
 
@@ -30,8 +31,8 @@ public class ChapterListLoader {
             }
 
             @Override
-            public void onError(String errorMessage) {
-                onLoadChapterListListener.onFailedLoadData(errorMessage);
+            public void onError(NetworkError networkError) {
+                onLoadChapterListListener.onFailedLoadData(networkError.getErrorMessage());
             }
         });
         subscriptions.add(subscription);

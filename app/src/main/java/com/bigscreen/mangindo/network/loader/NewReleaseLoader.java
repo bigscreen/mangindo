@@ -1,5 +1,6 @@
 package com.bigscreen.mangindo.network.loader;
 
+import com.bigscreen.mangindo.network.NetworkError;
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;
 
@@ -30,8 +31,8 @@ public class NewReleaseLoader {
             }
 
             @Override
-            public void onError(String errorMessage) {
-                loadNewReleaseListener.onFailedLoadData(errorMessage);
+            public void onError(NetworkError networkError) {
+                loadNewReleaseListener.onFailedLoadData(networkError.getErrorMessage());
             }
         });
         subscriptions.add(subscription);

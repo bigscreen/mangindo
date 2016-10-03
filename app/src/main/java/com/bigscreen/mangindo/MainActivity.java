@@ -1,5 +1,6 @@
 package com.bigscreen.mangindo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -66,6 +67,12 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
     @Override
     public void onError(String errorMessage) {
         progressLoading.setVisibility(View.GONE);
+        showAlert("Error", errorMessage, "Reload", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                newReleaseAdapter.loadManga();
+            }
+        });
     }
 
     @Override
@@ -81,4 +88,5 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
         intent.putExtra(IntentKey.MANGA_TITLE, newReleaseAdapter.getItem(position).getJudul());
         startActivity(intent);
     }
+
 }
