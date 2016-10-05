@@ -16,14 +16,45 @@
             android:id="@+id/grid_manga_new_release"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
 
         <ProgressBar
             android:id="@+id/progress_loading"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
+        <FrameLayout
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryOverlay"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="10dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/input_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_search"
+                android:hint="@string/search"
+                android:imeActionId="@+id/ime_action_search"
+                android:imeActionLabel="@string/search"
+                android:imeOptions="actionUnspecified"
+                android:singleLine="true"
+                android:paddingBottom="6dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="6dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp" />
+
+        </FrameLayout>
 
     </FrameLayout>
 

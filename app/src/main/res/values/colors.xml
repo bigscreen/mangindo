@@ -11,4 +11,8 @@
     <color name="blackOverlay">#a0212121</color>
     <color name="white">#fff</color>
     <color name="whiteTransparent">#c3ffffff</color>
+    <color name="colorPrimaryOverlay">#cc212121</color>
+
+    <color name="editSearchBackground">#afffffff</color>
+
 </resources>

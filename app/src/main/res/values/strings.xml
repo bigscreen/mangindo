@@ -2,6 +2,8 @@
     <string name="app_name">Mangindo</string>
     <string name="search">Search</string>
     <string name="sort_by">Sort by</string>
+    <string name="release_date">Release date</string>
+    <string name="manga_title">Manga title</string>
 
     <string name="chapter_">Chapter %s</string>
     <string name="page_">Page %d</string>

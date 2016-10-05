@@ -59,7 +59,7 @@ public class MangaContentListLoader {
         List<MangaImage> newMangaImages = new ArrayList<>();
         for (MangaImage mangaImage : mangaImages) {
             if (!mangaImage.getUrl().contains("iklan") && !mangaImage.getUrl().contains("all_anime")
-                    && !mangaImage.getUrl().contains("ik.jpg"))
+                    && !mangaImage.getUrl().contains("ik.jpg") && !mangaImage.getUrl().contains("rekrut"))
                 newMangaImages.add(mangaImage);
         }
         mangaContent.setChapter(newMangaImages);

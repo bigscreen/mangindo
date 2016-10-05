@@ -17,17 +17,25 @@ import com.bigscreen.mangindo.network.model.Manga;
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
         NewReleaseLoader.OnLoadNewReleaseListener, MangaViewHolder.OnMangaClickListener {
 
+    public static final int SORT_BY_DATE = 1;
+    public static final int SORT_BY_TITLE = 2;
+
     private Context context;
 
-    private List<Manga> mangaList;
+    private List<Manga> mangaList, backupMangaList;
     private NewReleaseLoader newReleaseLoader;
     private OnLoadDataListener loadDataListener;
     private OnListItemClickListener listItemClickListener;
+
+    private int sortBy = SORT_BY_DATE;
 
     public NewReleaseAdapter(Context context, OnLoadDataListener loadDataListener, MangaApiService apiService) {
         this.context = context;
@@ -59,8 +67,9 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return getItemCount() > 0 ? mangaList.get(position) : null;
     }
 
-    public void setMangaList(List<Manga> mangaList) {
+    private void setMangaList(List<Manga> mangaList) {
         this.mangaList = mangaList;
+        backupMangaList = mangaList;
         notifyDataSetChanged();
     }
 
@@ -100,4 +109,91 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void setOnListItemClickListener(OnListItemClickListener listItemClickListener) {
         this.listItemClickListener = listItemClickListener;
     }
+
+    public void setSortingOption(int sortBy) {
+        if (this.sortBy == sortBy) return;
+        this.sortBy = sortBy;
+        switch (sortBy) {
+            case SORT_BY_DATE:
+                sortMangaListByDate();
+                break;
+            case SORT_BY_TITLE:
+                sortMangaListByName();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void sortMangaListByDate() {
+        Collections.sort(mangaList, new Comparator<Manga>() {
+            @Override
+            public int compare(Manga manga, Manga mangaComparator) {
+                int id = manga.getId();
+                int idComparator = mangaComparator.getId();
+                return id - idComparator;
+            }
+        });
+        notifyDataSetChanged();
+    }
+
+    private void sortMangaListByName() {
+        Collections.sort(mangaList, new Comparator<Manga>() {
+            @Override
+            public int compare(Manga manga, Manga mangaComparator) {
+                String title = manga.getJudul().toLowerCase();
+                String titleComparator = mangaComparator.getJudul().toLowerCase();
+                return title.compareTo(titleComparator);
+            }
+        });
+        notifyDataSetChanged();
+    }
+
+    public void filterList(String keyword) {
+        mangaList = getBackupMangaList();
+        if (!keyword.isEmpty()) {
+            List<Manga> filteredList = new ArrayList<>();
+            for (Manga manga : mangaList) {
+                if (isStartWith(manga.getJudul(), keyword) || isStartWith(manga.getHiddenKomik(), keyword)) {
+                    filteredList.add(manga);
+                }
+            }
+            mangaList = filteredList;
+        }
+        notifyDataSetChanged();
+    }
+
+    private boolean isStartWith(String firstArg, String secondArg) {
+        return firstArg.toLowerCase().startsWith(secondArg.toLowerCase());
+    }
+
+    private List<Manga> getBackupMangaList() {
+        List<Manga> tempMangaList = backupMangaList;
+        switch (sortBy) {
+            case SORT_BY_DATE:
+                Collections.sort(tempMangaList, new Comparator<Manga>() {
+                    @Override
+                    public int compare(Manga manga, Manga mangaComparator) {
+                        int id = manga.getId();
+                        int idComparator = mangaComparator.getId();
+                        return id - idComparator;
+                    }
+                });
+                break;
+            case SORT_BY_TITLE:
+                Collections.sort(tempMangaList, new Comparator<Manga>() {
+                    @Override
+                    public int compare(Manga manga, Manga mangaComparator) {
+                        String title = manga.getJudul().toLowerCase();
+                        String titleComparator = mangaComparator.getJudul().toLowerCase();
+                        return title.compareTo(titleComparator);
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+        return tempMangaList;
+    }
+
 }

@@ -1,11 +1,14 @@
 package com.bigscreen.mangindo.base;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bigscreen.mangindo.R;
@@ -43,6 +46,18 @@ public class BaseActivity extends AppCompatActivity {
         dlgBuilder.setPositiveButton(buttonText, onClickListener);
         if (title != null) dlgBuilder.setTitle(title);
         dlgBuilder.show();
+    }
+
+    protected void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+    }
+
+    protected void showKeyboard(EditText editText) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (editText != null) {
+            inputMethodManager.showSoftInput(editText, 0);
+        }
     }
 
 }

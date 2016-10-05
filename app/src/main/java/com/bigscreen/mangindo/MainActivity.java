@@ -5,7 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,6 +35,11 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
     private ProgressBar progressLoading;
     private NewReleaseAdapter newReleaseAdapter;
 
+    private FrameLayout layoutSearch;
+    private EditText inputSearch;
+    private Animation animSlideUp;
+    private Animation animSlideDown;
+
     @Inject
     MangaApiService mangaApiService;
 
@@ -38,6 +54,10 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
 
         gridMangaNewRelease = (RecyclerView) findViewById(R.id.grid_manga_new_release);
         progressLoading = (ProgressBar) findViewById(R.id.progress_loading);
+        layoutSearch = (FrameLayout) findViewById(R.id.layout_search);
+        inputSearch = (EditText) findViewById(R.id.input_search);
+        animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim);
+        animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim);
         newReleaseAdapter = new NewReleaseAdapter(this, this, mangaApiService);
 
         gridMangaNewRelease.setLayoutManager(new GridLayoutManager(this, 3));
@@ -45,6 +65,34 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
 
         newReleaseAdapter.setOnListItemClickListener(this);
         newReleaseAdapter.loadManga();
+
+        inputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.ime_action_search || id == EditorInfo.IME_NULL) {
+                    newReleaseAdapter.filterList(inputSearch.getText().toString());
+                    hideKeyboard();
+                    return true;
+                }
+                return false;
+            }
+        });
+        inputSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                newReleaseAdapter.filterList(editable.toString());
+            }
+        });
     }
 
     @Override
@@ -52,6 +100,13 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
         super.setTitle(title);
         TextView textTitle = (TextView) findViewById(R.id.text_main_title);
         textTitle.setText(title);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -89,4 +144,80 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
         startActivity(intent);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_search: {
+                if (layoutSearch.getVisibility() == View.VISIBLE)
+                    hideSearchLayout();
+                else
+                    showSearchLayout();
+                return true;
+            }
+            case R.id.action_sort_by_release: {
+                newReleaseAdapter.setSortingOption(NewReleaseAdapter.SORT_BY_DATE);
+                showToast("Sorted by release date.");
+                return true;
+            }
+            case R.id.action_sort_by_title: {
+                newReleaseAdapter.setSortingOption(NewReleaseAdapter.SORT_BY_TITLE);
+                showToast("Sorted by manga title.");
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void hideSearchLayout() {
+        animSlideUp.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                inputSearch.clearFocus();
+                layoutSearch.setVisibility(View.GONE);
+                hideKeyboard();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        layoutSearch.startAnimation(animSlideUp);
+    }
+
+    private void showSearchLayout() {
+        layoutSearch.setVisibility(View.VISIBLE);
+        animSlideDown.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                inputSearch.requestFocus();
+                showKeyboard(inputSearch);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        layoutSearch.startAnimation(animSlideDown);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (layoutSearch.getVisibility() == View.VISIBLE)
+            hideSearchLayout();
+        else
+            super.onBackPressed();
+    }
 }
