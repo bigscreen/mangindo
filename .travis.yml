@@ -23,6 +23,9 @@ android:
     # if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-24
     - sys-img-x86-android-17
+    
+  jdk:
+    - oraclejdk8  
 
 # Emulator Management: Create, Start and Wait
 before_script:
