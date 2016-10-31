@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
         inputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.ime_action_search || id == EditorInfo.IME_NULL) {
+                if (id == R.id.ime_action_search || id == EditorInfo.IME_ACTION_SEARCH) {
                     newReleaseAdapter.filterList(inputSearch.getText().toString());
                     hideKeyboard();
                     return true;
@@ -148,18 +148,25 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search: {
-                if (layoutSearch.getVisibility() == View.VISIBLE)
+                if (layoutSearch.getVisibility() == View.VISIBLE) {
+                    item.setIcon(R.drawable.ic_search_white);
+                    item.setTitle(R.string.search);
                     hideSearchLayout();
-                else
+                } else {
+                    item.setIcon(R.drawable.ic_close_white);
+                    item.setTitle(R.string.close_search);
                     showSearchLayout();
+                }
                 return true;
             }
             case R.id.action_sort_by_release: {
+                item.setChecked(true);
                 newReleaseAdapter.setSortingOption(NewReleaseAdapter.SORT_BY_DATE);
                 showToast("Sorted by release date.");
                 return true;
             }
             case R.id.action_sort_by_title: {
+                item.setChecked(true);
                 newReleaseAdapter.setSortingOption(NewReleaseAdapter.SORT_BY_TITLE);
                 showToast("Sorted by manga title.");
                 return true;

@@ -31,7 +31,7 @@ public class MangaContentListLoader {
                 if (response != null)
                     onLoadMangaContentListListener.onSuccessLoadData(getNonAdsMangaContent(response));
                 else
-                    onLoadMangaContentListListener.onFailedLoadData("Chapter tidak dapat ditemukan");
+                    onLoadMangaContentListListener.onFailedLoadData("Cannot load chapter");
             }
 
             @Override

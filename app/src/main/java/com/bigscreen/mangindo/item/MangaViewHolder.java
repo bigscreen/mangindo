@@ -47,7 +47,7 @@ public class MangaViewHolder extends RecyclerView.ViewHolder {
     public void bindData(Manga manga, int position) {
         this.position = position;
         textTitle.setText(manga.getJudul());
-        textChapter.setText(String.format(context.getString(R.string._chapter), manga.getHiddenNewChapter()));
+        textChapter.setText(String.format(context.getString(R.string.chapter_), manga.getHiddenNewChapter()));
         Glide.with(context).load(manga.getIconKomik())
                 .placeholder(R.drawable.ic_load_image)
                 .error(R.drawable.ic_image_error)

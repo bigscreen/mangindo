@@ -8,14 +8,16 @@
         android:title="@string/sort_by"
         app:showAsAction="ifRoom">
         <menu>
-            <item
-                android:id="@+id/action_sort_by_release"
-                android:title="@string/release_date"
-                app:showAsAction="never" />
-            <item
-                android:id="@+id/action_sort_by_title"
-                android:title="@string/manga_title"
-                app:showAsAction="never" />
+            <group
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/action_sort_by_release"
+                    android:title="@string/release_date"
+                    android:checked="true"/>
+                <item
+                    android:id="@+id/action_sort_by_title"
+                    android:title="@string/manga_title" />
+            </group>
         </menu>
     </item>
 
