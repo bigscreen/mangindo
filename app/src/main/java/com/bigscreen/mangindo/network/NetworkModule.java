@@ -1,5 +1,7 @@
 package com.bigscreen.mangindo.network;
 
+import android.content.Context;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -16,6 +18,13 @@ public class NetworkModule {
     @Provides
     @Singleton
     @SuppressWarnings("unused")
+    public ConnectionManager providesConnectionManager(Context context) {
+        return new ConnectionManager(context);
+    }
+
+    @Provides
+    @Singleton
+    @SuppressWarnings("unused")
     public HttpLoggingInterceptor providesHttpLoggingInterceptor() {
         return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     }
@@ -23,8 +32,10 @@ public class NetworkModule {
     @Provides
     @Singleton
     @SuppressWarnings("unused")
-    public OkHttpClient providesOkHttpClient(HttpLoggingInterceptor interceptor) {
-        return new OkHttpClient.Builder().addInterceptor(interceptor).build();
+    public OkHttpClient providesOkHttpClient(HttpLoggingInterceptor loggingInterceptor) {
+        return new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
     }
 
     @Provides

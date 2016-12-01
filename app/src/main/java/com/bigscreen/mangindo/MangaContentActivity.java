@@ -1,11 +1,10 @@
 package com.bigscreen.mangindo;
 
 import android.content.DialogInterface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,7 +72,6 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
             getSupportActionBar().setSubtitle(String.format(getString(R.string.page_), 1));
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setBackgroundDrawable(getTransparentColor());
         }
 
         pagerMangaImages.setAdapter(pagerAdapter);
@@ -144,12 +142,6 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
         getSupportActionBar().setSubtitle(String.format(getString(R.string.manga_page_index), 1, pageSize));
     }
 
-    private ColorDrawable getTransparentColor() {
-        ColorDrawable actionBarColor = new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary));
-        actionBarColor.setAlpha(80);
-        return actionBarColor;
-    }
-
     @Override
     public void OnContentImageClick(int position) {
         if (toolbar.getVisibility() == View.VISIBLE)
@@ -184,4 +176,5 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
         toolbar.setVisibility(View.VISIBLE);
         toolbar.startAnimation(animSlideDown);
     }
+
 }

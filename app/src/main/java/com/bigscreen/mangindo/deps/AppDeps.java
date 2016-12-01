@@ -12,6 +12,7 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {
+        AppModule.class,
         NetworkModule.class,
         MangaModule.class
 })

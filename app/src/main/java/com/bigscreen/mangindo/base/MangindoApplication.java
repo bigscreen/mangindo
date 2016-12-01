@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.bigscreen.mangindo.deps.AppDeps;
+import com.bigscreen.mangindo.deps.AppModule;
 import com.bigscreen.mangindo.deps.DaggerAppDeps;
 
 public class MangindoApplication extends Application {
@@ -16,7 +17,7 @@ public class MangindoApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "Application created.");
-        appDeps = DaggerAppDeps.builder().build();
+        appDeps = DaggerAppDeps.builder().appModule(new AppModule(this)).build();
     }
 
     @Override
