@@ -1,5 +1,4 @@
 language: android
-jdk: oraclejdk8  
 android:
   components:
     # Uncomment the lines below if you want to
@@ -23,7 +22,17 @@ android:
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
     - sys-img-armeabi-v7a-android-24
-    - sys-img-x86-android-17
+    - sys-img-x86-android-18
+
+jdk:
+  - oraclejdk8
+
+install: true
+
+script:
+  - sudo apt-get update && sudo apt-get install oracle-java8-installer
+  - java -version
+
 
 # Emulator Management: Create, Start and Wait
 before_script:
