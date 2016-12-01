@@ -10,13 +10,13 @@ import rx.Observable;
 
 public interface MangaNetworkService {
 
-    @GET("official/new-release.php")
+    @GET("main.php")
     Observable<NewReleaseResponse> getNewReleaseManga();
 
-    @GET("official/chapter-list.php")
+    @GET("chapter_list.php")
     Observable<ChapterListResponse> getChapters(@Query("manga") String mangaTitle);
 
-    @GET("official/image-list.php")
+    @GET("image_list.php")
     Observable<MangaContentListResponse> getMangaContents(@Query("manga") String mangaTitle, @Query("chapter") String chapter);
 
 }

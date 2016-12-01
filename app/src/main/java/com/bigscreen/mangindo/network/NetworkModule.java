@@ -45,7 +45,7 @@ public class NetworkModule {
         return new Retrofit.Builder()
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
-                    .baseUrl("http://mangacanblog.com/")
+                    .baseUrl("http://mangacanblog.com/official/2016/")
                     .client(okHttpClient)
                     .build();
     }
