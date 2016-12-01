@@ -3,6 +3,8 @@ package com.bigscreen.mangindo;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -31,6 +33,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener {
 
+    private SwipeRefreshLayout layoutSwipeRefresh;
     private RecyclerView gridMangaNewRelease;
     private ProgressBar progressLoading;
     private NewReleaseAdapter newReleaseAdapter;
@@ -39,6 +42,8 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
     private EditText inputSearch;
     private Animation animSlideUp;
     private Animation animSlideDown;
+
+    private boolean isLoading;
 
     @Inject
     MangaApiService mangaApiService;
@@ -52,6 +57,7 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        layoutSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.layout_swipe_refresh);
         gridMangaNewRelease = (RecyclerView) findViewById(R.id.grid_manga_new_release);
         progressLoading = (ProgressBar) findViewById(R.id.progress_loading);
         layoutSearch = (FrameLayout) findViewById(R.id.layout_search);
@@ -59,6 +65,7 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim);
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim);
         newReleaseAdapter = new NewReleaseAdapter(this, this, mangaApiService);
+        layoutSwipeRefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent));
 
         gridMangaNewRelease.setLayoutManager(new GridLayoutManager(this, 3));
         gridMangaNewRelease.setAdapter(newReleaseAdapter);
@@ -93,6 +100,12 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
                 newReleaseAdapter.filterList(editable.toString());
             }
         });
+        layoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                newReleaseAdapter.loadManga();
+            }
+        });
     }
 
     @Override
@@ -104,23 +117,32 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        if (!isLoading) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_main, menu);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public void onPrepare() {
-        progressLoading.setVisibility(View.VISIBLE);
+        if (!layoutSwipeRefresh.isRefreshing())
+            progressLoading.setVisibility(View.VISIBLE);
+        isLoading = true;
+        invalidateOptionsMenu();
     }
 
     @Override
     public void onSuccess() {
+        layoutSwipeRefresh.setRefreshing(false);
         progressLoading.setVisibility(View.GONE);
+        isLoading = false;
+        invalidateOptionsMenu();
     }
 
     @Override
     public void onError(String errorMessage) {
+        layoutSwipeRefresh.setRefreshing(false);
         progressLoading.setVisibility(View.GONE);
         showAlert("Error", errorMessage, "Reload", new DialogInterface.OnClickListener() {
             @Override
