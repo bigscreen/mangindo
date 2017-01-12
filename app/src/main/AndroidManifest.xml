@@ -20,6 +20,26 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:label="@string/filter_title_mangindo">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://mangindo.com/open_app” -->
+                <data
+                    android:host="mangindo.com"
+                    android:pathPrefix="/open_app"
+                    android:scheme="http" />
+                <!-- Accepts URIs that begin with "http://www.mangindo.com/open_app” -->
+                <data
+                    android:host="www.mangindo.com"
+                    android:pathPrefix="/open_app"
+                    android:scheme="http" />
+                <!-- Accepts URIs that begin with "mangindo://open_app” -->
+                <data
+                    android:host="open_app"
+                    android:scheme="mangindo" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ChapterListActivity"

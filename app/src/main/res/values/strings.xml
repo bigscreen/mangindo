@@ -5,6 +5,7 @@
     <string name="release_date">Release date</string>
     <string name="manga_title">Manga title</string>
     <string name="close_search">Close Search</string>
+    <string name="filter_title_mangindo">Open Mangindo</string>
 
     <string name="chapter_">Chapter %s</string>
     <string name="page_">Page %d</string>

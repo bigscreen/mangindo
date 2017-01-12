@@ -36,6 +36,7 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private OnListItemClickListener listItemClickListener;
 
     private int sortBy = SORT_BY_DATE;
+    private String searchKeyword = "";
 
     public NewReleaseAdapter(Context context, OnLoadDataListener loadDataListener, MangaApiService apiService) {
         this.context = context;
@@ -55,7 +56,10 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((MangaViewHolder) holder).bindData(getItem(position), position);
+        if (searchKeyword.isEmpty())
+            ((MangaViewHolder) holder).bindData(getItem(position), position);
+        else
+            ((MangaViewHolder) holder).bindDataSearch(getItem(position), position, searchKeyword);
     }
 
     @Override
@@ -150,6 +154,7 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void filterList(String keyword) {
+        searchKeyword = keyword;
         mangaList = getBackupMangaList();
         if (!keyword.isEmpty()) {
             List<Manga> filteredList = new ArrayList<>();

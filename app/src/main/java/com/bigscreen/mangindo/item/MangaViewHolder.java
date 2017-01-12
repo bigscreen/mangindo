@@ -1,7 +1,11 @@
 package com.bigscreen.mangindo.item;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.BackgroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +14,9 @@ import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.network.model.Manga;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MangaViewHolder extends RecyclerView.ViewHolder {
 
@@ -54,6 +61,21 @@ public class MangaViewHolder extends RecyclerView.ViewHolder {
                 .override(200, 200).centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(imageCover);
+    }
+
+    public void bindDataSearch(Manga manga, int position, String keyword) {
+        bindData(manga, position);
+        textTitle.setText(getSearchSpannedTitle(manga.getJudul(), keyword));
+    }
+
+    private SpannableStringBuilder getSearchSpannedTitle(String title, String keyword) {
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(title);
+        String regex = String.format("(%s)", keyword.toLowerCase());
+        Matcher matcher = Pattern.compile(regex).matcher(title.toLowerCase());
+        if (matcher.find()) {
+            spannableStringBuilder.setSpan(new BackgroundColorSpan(Color.YELLOW), matcher.start(1), matcher.end(1), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        }
+        return spannableStringBuilder;
     }
 
     public interface OnMangaClickListener {
