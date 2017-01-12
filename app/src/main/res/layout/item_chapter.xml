@@ -14,7 +14,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="center_vertical"
-        app:srcCompat="@drawable/ic_globe"
+        app:srcCompat="@drawable/ic_book_black"
         tools:ignore="ContentDescription" />
 
     <LinearLayout

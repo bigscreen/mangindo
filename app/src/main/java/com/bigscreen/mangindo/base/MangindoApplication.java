@@ -1,6 +1,7 @@
 package com.bigscreen.mangindo.base;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import com.bigscreen.mangindo.deps.AppDeps;
@@ -16,7 +17,7 @@ public class MangindoApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "Application created.");
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         appDeps = DaggerAppDeps.builder().appModule(new AppModule(this)).build();
     }
 
