@@ -25,16 +25,16 @@ public class ChapterItemView extends LinearLayout {
 
     public void bindData(Chapter chapter) {
         String chapterText, chapterTitle;
-        if (chapter.getJudul().contains("-")) {
-            chapterText = chapter.getJudul().split("-")[0];
-            chapterTitle = chapter.getJudul().split("-")[1];
+        if (chapter.getTitle().contains("-")) {
+            chapterText = chapter.getTitle().split("-")[0];
+            chapterTitle = chapter.getTitle().split("-")[1];
             if (chapterText.isEmpty())
                 chapterText = String.format(getContext().getString(R.string.chapter_), chapter.getHiddenChapter());
             if (chapterTitle.isEmpty())
-                chapterTitle = chapter.getJudul();
+                chapterTitle = chapter.getTitle();
         } else {
             chapterText = String.format(getContext().getString(R.string.chapter_), chapter.getHiddenChapter());
-            chapterTitle = chapter.getJudul();
+            chapterTitle = chapter.getTitle();
         }
         textChapter.setText(chapterText);
         textChapterTitle.setText(chapterTitle);

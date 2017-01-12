@@ -11,32 +11,16 @@ public class Chapter implements Parcelable {
     private int id;
 
     @SerializedName("judul")
-    private String judul;
+    private String title;
 
-    @SerializedName("waktu")
-    private String waktu;
+    @SerializedName("time")
+    private String time;
 
     @SerializedName("hidden_komik")
-    private String hiddenKomik;
+    private String hiddenComic;
 
     @SerializedName("hidden_chapter")
     private String hiddenChapter;
-
-    public String getHiddenChapter() {
-        return hiddenChapter;
-    }
-
-    public void setHiddenChapter(String hiddenChapter) {
-        this.hiddenChapter = hiddenChapter;
-    }
-
-    public String getHiddenKomik() {
-        return hiddenKomik;
-    }
-
-    public void setHiddenKomik(String hiddenKomik) {
-        this.hiddenKomik = hiddenKomik;
-    }
 
     public int getId() {
         return id;
@@ -46,20 +30,36 @@ public class Chapter implements Parcelable {
         this.id = id;
     }
 
-    public String getJudul() {
-        return judul;
+    public String getTitle() {
+        return title;
     }
 
-    public void setJudul(String judul) {
-        this.judul = judul;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getWaktu() {
-        return waktu;
+    public String getTime() {
+        return time;
     }
 
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getHiddenComic() {
+        return hiddenComic;
+    }
+
+    public void setHiddenComic(String hiddenComic) {
+        this.hiddenComic = hiddenComic;
+    }
+
+    public String getHiddenChapter() {
+        return hiddenChapter;
+    }
+
+    public void setHiddenChapter(String hiddenChapter) {
+        this.hiddenChapter = hiddenChapter;
     }
 
     @Override
@@ -70,9 +70,9 @@ public class Chapter implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeString(this.judul);
-        dest.writeString(this.waktu);
-        dest.writeString(this.hiddenKomik);
+        dest.writeString(this.title);
+        dest.writeString(this.time);
+        dest.writeString(this.hiddenComic);
         dest.writeString(this.hiddenChapter);
     }
 
@@ -81,9 +81,9 @@ public class Chapter implements Parcelable {
 
     protected Chapter(Parcel in) {
         this.id = in.readInt();
-        this.judul = in.readString();
-        this.waktu = in.readString();
-        this.hiddenKomik = in.readString();
+        this.title = in.readString();
+        this.time = in.readString();
+        this.hiddenComic = in.readString();
         this.hiddenChapter = in.readString();
     }
 
@@ -104,9 +104,9 @@ public class Chapter implements Parcelable {
         return "Chapter{" +
                 "hiddenChapter='" + hiddenChapter + '\'' +
                 ", id=" + id +
-                ", judul='" + judul + '\'' +
-                ", waktu='" + waktu + '\'' +
-                ", hiddenKomik='" + hiddenKomik + '\'' +
+                ", title='" + title + '\'' +
+                ", time='" + time + '\'' +
+                ", hiddenComic='" + hiddenComic + '\'' +
                 '}';
     }
 
