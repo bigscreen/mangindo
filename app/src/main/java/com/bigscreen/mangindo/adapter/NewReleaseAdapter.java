@@ -145,8 +145,8 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Collections.sort(mangaList, new Comparator<Manga>() {
             @Override
             public int compare(Manga manga, Manga mangaComparator) {
-                String title = manga.getJudul().toLowerCase();
-                String titleComparator = mangaComparator.getJudul().toLowerCase();
+                String title = manga.getTitle().toLowerCase();
+                String titleComparator = mangaComparator.getTitle().toLowerCase();
                 return title.compareTo(titleComparator);
             }
         });
@@ -159,7 +159,7 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (!keyword.isEmpty()) {
             List<Manga> filteredList = new ArrayList<>();
             for (Manga manga : mangaList) {
-                if (isStartWith(manga.getJudul(), keyword) || isStartWith(manga.getHiddenKomik(), keyword)) {
+                if (isStartWith(manga.getTitle(), keyword) || isStartWith(manga.getHiddenComic(), keyword)) {
                     filteredList.add(manga);
                 }
             }
@@ -189,8 +189,8 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 Collections.sort(tempMangaList, new Comparator<Manga>() {
                     @Override
                     public int compare(Manga manga, Manga mangaComparator) {
-                        String title = manga.getJudul().toLowerCase();
-                        String titleComparator = mangaComparator.getJudul().toLowerCase();
+                        String title = manga.getTitle().toLowerCase();
+                        String titleComparator = mangaComparator.getTitle().toLowerCase();
                         return title.compareTo(titleComparator);
                     }
                 });

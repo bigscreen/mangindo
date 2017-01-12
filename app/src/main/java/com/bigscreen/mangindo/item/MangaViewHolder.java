@@ -53,9 +53,9 @@ public class MangaViewHolder extends RecyclerView.ViewHolder {
 
     public void bindData(Manga manga, int position) {
         this.position = position;
-        textTitle.setText(manga.getJudul());
+        textTitle.setText(manga.getTitle());
         textChapter.setText(String.format(context.getString(R.string.chapter_), manga.getHiddenNewChapter()));
-        Glide.with(context).load(manga.getIconKomik())
+        Glide.with(context).load(manga.getComicIcon())
                 .placeholder(R.drawable.ic_load_image)
                 .error(R.drawable.ic_image_error)
                 .override(200, 200).centerCrop()
@@ -65,7 +65,7 @@ public class MangaViewHolder extends RecyclerView.ViewHolder {
 
     public void bindDataSearch(Manga manga, int position, String keyword) {
         bindData(manga, position);
-        textTitle.setText(getSearchSpannedTitle(manga.getJudul(), keyword));
+        textTitle.setText(getSearchSpannedTitle(manga.getTitle(), keyword));
     }
 
     private SpannableStringBuilder getSearchSpannedTitle(String title, String keyword) {

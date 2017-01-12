@@ -13,7 +13,7 @@ public class Chapter implements Parcelable {
     @SerializedName("judul")
     private String title;
 
-    @SerializedName("time")
+    @SerializedName("waktu")
     private String time;
 
     @SerializedName("hidden_komik")

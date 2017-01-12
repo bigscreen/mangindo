@@ -161,8 +161,8 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
     @Override
     public void onListItemClick(int position) {
         Intent intent = new Intent(this, ChapterListActivity.class);
-        intent.putExtra(IntentKey.MANGA_KEY, newReleaseAdapter.getItem(position).getHiddenKomik());
-        intent.putExtra(IntentKey.MANGA_TITLE, newReleaseAdapter.getItem(position).getJudul());
+        intent.putExtra(IntentKey.MANGA_KEY, newReleaseAdapter.getItem(position).getHiddenComic());
+        intent.putExtra(IntentKey.MANGA_TITLE, newReleaseAdapter.getItem(position).getTitle());
         startActivity(intent);
     }
 

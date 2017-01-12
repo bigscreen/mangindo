@@ -11,7 +11,7 @@ public class Manga implements Parcelable {
     private int id;
 
     @SerializedName("idServer")
-    private int idServer;
+    private int serverId;
 
     @SerializedName("favorite")
     private int favorite;
@@ -23,28 +23,25 @@ public class Manga implements Parcelable {
     private String genre;
 
     @SerializedName("hidden_komik")
-    private String hiddenKomik;
-
-    @SerializedName("hitungWaktu")
-    private String hitungWaktu;
+    private String hiddenComic;
 
     @SerializedName("icon_komik")
-    private String iconKomik;
+    private String comicIcon;
 
     @SerializedName("judul")
-    private String judul;
+    private String title;
 
     @SerializedName("lastModified")
     private String lastModified;
 
     @SerializedName("nama_lain")
-    private String namaLain;
+    private String alias;
 
     @SerializedName("new_chapter")
     private String newChapter;
 
     @SerializedName("pengarang")
-    private String pengarang;
+    private String author;
 
     @SerializedName("published")
     private String published;
@@ -59,7 +56,7 @@ public class Manga implements Parcelable {
     private String summary;
 
     @SerializedName("waktu")
-    private String waktu;
+    private String time;
 
     public Manga() {
     }
@@ -80,12 +77,12 @@ public class Manga implements Parcelable {
         this.genre = genre;
     }
 
-    public String getHiddenKomik() {
-        return hiddenKomik;
+    public String getHiddenComic() {
+        return hiddenComic;
     }
 
-    public void setHiddenKomik(String hiddenKomik) {
-        this.hiddenKomik = hiddenKomik;
+    public void setHiddenComic(String hiddenComic) {
+        this.hiddenComic = hiddenComic;
     }
 
     public String getHiddenNewChapter() {
@@ -96,20 +93,12 @@ public class Manga implements Parcelable {
         this.hiddenNewChapter = hiddenNewChapter;
     }
 
-    public String getHitungWaktu() {
-        return hitungWaktu;
+    public String getComicIcon() {
+        return comicIcon;
     }
 
-    public void setHitungWaktu(String hitungWaktu) {
-        this.hitungWaktu = hitungWaktu;
-    }
-
-    public String getIconKomik() {
-        return iconKomik;
-    }
-
-    public void setIconKomik(String iconKomik) {
-        this.iconKomik = iconKomik;
+    public void setComicIcon(String comicIcon) {
+        this.comicIcon = comicIcon;
     }
 
     public int getId() {
@@ -120,20 +109,20 @@ public class Manga implements Parcelable {
         this.id = id;
     }
 
-    public int getIdServer() {
-        return idServer;
+    public int getServerId() {
+        return serverId;
     }
 
-    public void setIdServer(int idServer) {
-        this.idServer = idServer;
+    public void setServerId(int serverId) {
+        this.serverId = serverId;
     }
 
-    public String getJudul() {
-        return judul;
+    public String getTitle() {
+        return title;
     }
 
-    public void setJudul(String judul) {
-        this.judul = judul;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getLastModified() {
@@ -144,12 +133,12 @@ public class Manga implements Parcelable {
         this.lastModified = lastModified;
     }
 
-    public String getNamaLain() {
-        return namaLain;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setNamaLain(String namaLain) {
-        this.namaLain = namaLain;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getNewChapter() {
@@ -160,12 +149,12 @@ public class Manga implements Parcelable {
         this.newChapter = newChapter;
     }
 
-    public String getPengarang() {
-        return pengarang;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setPengarang(String pengarang) {
-        this.pengarang = pengarang;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getPublished() {
@@ -200,12 +189,12 @@ public class Manga implements Parcelable {
         this.summary = summary;
     }
 
-    public String getWaktu() {
-        return waktu;
+    public String getTime() {
+        return time;
     }
 
-    public void setWaktu(String waktu) {
-        this.waktu = waktu;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override
@@ -216,44 +205,42 @@ public class Manga implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeInt(this.idServer);
+        dest.writeInt(this.serverId);
         dest.writeInt(this.favorite);
         dest.writeString(this.hiddenNewChapter);
         dest.writeString(this.genre);
-        dest.writeString(this.hiddenKomik);
-        dest.writeString(this.hitungWaktu);
-        dest.writeString(this.iconKomik);
-        dest.writeString(this.judul);
+        dest.writeString(this.hiddenComic);
+        dest.writeString(this.comicIcon);
+        dest.writeString(this.title);
         dest.writeString(this.lastModified);
-        dest.writeString(this.namaLain);
+        dest.writeString(this.alias);
         dest.writeString(this.newChapter);
-        dest.writeString(this.pengarang);
+        dest.writeString(this.author);
         dest.writeString(this.published);
         dest.writeString(this.read);
         dest.writeString(this.status);
         dest.writeString(this.summary);
-        dest.writeString(this.waktu);
+        dest.writeString(this.time);
     }
 
     protected Manga(Parcel in) {
         this.id = in.readInt();
-        this.idServer = in.readInt();
+        this.serverId = in.readInt();
         this.favorite = in.readInt();
         this.hiddenNewChapter = in.readString();
         this.genre = in.readString();
-        this.hiddenKomik = in.readString();
-        this.hitungWaktu = in.readString();
-        this.iconKomik = in.readString();
-        this.judul = in.readString();
+        this.hiddenComic = in.readString();
+        this.comicIcon = in.readString();
+        this.title = in.readString();
         this.lastModified = in.readString();
-        this.namaLain = in.readString();
+        this.alias = in.readString();
         this.newChapter = in.readString();
-        this.pengarang = in.readString();
+        this.author = in.readString();
         this.published = in.readString();
         this.read = in.readString();
         this.status = in.readString();
         this.summary = in.readString();
-        this.waktu = in.readString();
+        this.time = in.readString();
     }
 
     public static final Parcelable.Creator<Manga> CREATOR = new Parcelable.Creator<Manga>() {
@@ -273,22 +260,21 @@ public class Manga implements Parcelable {
         return "Manga{" +
                 "favorite=" + favorite +
                 ", id=" + id +
-                ", idServer=" + idServer +
+                ", serverId=" + serverId +
                 ", hiddenNewChapter=" + hiddenNewChapter +
                 ", genre='" + genre + '\'' +
-                ", hiddenKomik='" + hiddenKomik + '\'' +
-                ", hitungWaktu='" + hitungWaktu + '\'' +
-                ", iconKomik='" + iconKomik + '\'' +
-                ", judul='" + judul + '\'' +
+                ", hiddenComic='" + hiddenComic + '\'' +
+                ", comicIcon='" + comicIcon + '\'' +
+                ", title='" + title + '\'' +
                 ", lastModified='" + lastModified + '\'' +
-                ", namaLain='" + namaLain + '\'' +
+                ", alias='" + alias + '\'' +
                 ", newChapter='" + newChapter + '\'' +
-                ", pengarang='" + pengarang + '\'' +
+                ", author='" + author + '\'' +
                 ", published='" + published + '\'' +
                 ", read='" + read + '\'' +
                 ", status='" + status + '\'' +
                 ", summary='" + summary + '\'' +
-                ", waktu='" + waktu + '\'' +
+                ", time='" + time + '\'' +
                 '}';
     }
 }
