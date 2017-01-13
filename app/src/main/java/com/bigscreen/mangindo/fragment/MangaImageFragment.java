@@ -3,14 +3,11 @@ package com.bigscreen.mangindo.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigscreen.mangindo.R;
-import com.bigscreen.mangindo.common.Constant;
-import com.bigscreen.mangindo.common.Utils;
 import com.bigscreen.mangindo.listener.OnContentImageClickListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -47,8 +44,6 @@ public class MangaImageFragment extends Fragment implements PhotoViewAttacher.On
     }
 
     private void loadImage(String imageUrl) {
-        Log.d(Constant.LOG_TAG, "imageUrl= " + imageUrl);
-        Log.d(Constant.LOG_TAG, "encodedImageUrl= " + Utils.getEncodedUrl(imageUrl));
         Glide.with(getContext()).load(imageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(imageManga);
