@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.bigscreen.mangindo.network.loader.MangaContentListLoader;
 import com.bigscreen.mangindo.network.model.MangaImage;
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;
+import com.bigscreen.mangindo.stored.StoredDataService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,9 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
 
     private int pageSize;
     private String mangaKey = "", mangaTitle = "", chapterKey = "";
+
+    @Inject
+    StoredDataService storedDataService;
 
     @Inject
     MangaApiService apiService;
@@ -119,15 +122,28 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
     public void onSuccessLoadData(MangaContentListResponse mangaContentListResponse) {
         progressLoading.setVisibility(View.GONE);
         setContent(mangaContentListResponse.getChapter());
+        storedDataService.saveContentOfComic(mangaKey, chapterKey, mangaContentListResponse);
     }
 
     @Override
-    public void onFailedLoadData(String message) {
+    public void onFailedLoadData(final String message) {
         progressLoading.setVisibility(View.GONE);
-        showAlert("Error", message, "Reload", new DialogInterface.OnClickListener() {
+        storedDataService.pullStoredContentOfComic(mangaKey, chapterKey,
+                new StoredDataService.OnGetSavedDataListener<MangaContentListResponse>() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                mangaContentListLoader.loadContentList(mangaKey, chapterKey);
+            public void onDataFound(MangaContentListResponse savedData) {
+                progressLoading.setVisibility(View.GONE);
+                setContent(savedData.getChapter());
+            }
+
+            @Override
+            public void onDataNotFound() {
+                showAlert("Error", message, "Reload", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mangaContentListLoader.loadContentList(mangaKey, chapterKey);
+                    }
+                });
             }
         });
     }
