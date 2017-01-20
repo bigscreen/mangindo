@@ -16,6 +16,7 @@ import com.bigscreen.mangindo.common.Constant;
 import com.bigscreen.mangindo.common.IntentKey;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
 import com.bigscreen.mangindo.network.service.MangaApiService;
+import com.bigscreen.mangindo.stored.StoredDataService;
 
 import javax.inject.Inject;
 
@@ -27,6 +28,9 @@ public class ChapterListActivity extends BaseActivity implements OnLoadDataListe
 
     private String mangaKey;
     private String mangaCompleteTitle;
+
+    @Inject
+    StoredDataService storedDataService;
 
     @Inject
     MangaApiService apiService;
@@ -46,7 +50,7 @@ public class ChapterListActivity extends BaseActivity implements OnLoadDataListe
 
         listChapters = (ListView) findViewById(R.id.list_chapters);
         progressLoading = (ProgressBar) findViewById(R.id.progress_loading);
-        chaptersAdapter = new ChaptersAdapter(this, this, apiService);
+        chaptersAdapter = new ChaptersAdapter(this, this, mangaKey, storedDataService, apiService);
         listChapters.setAdapter(chaptersAdapter);
         listChapters.setOnItemClickListener(this);
 
@@ -55,7 +59,7 @@ public class ChapterListActivity extends BaseActivity implements OnLoadDataListe
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        chaptersAdapter.loadChapters(mangaKey);
+        chaptersAdapter.loadChapters();
     }
 
     @Override
@@ -83,7 +87,7 @@ public class ChapterListActivity extends BaseActivity implements OnLoadDataListe
         showAlert("Error", errorMessage, "Reload", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                chaptersAdapter.loadChapters(mangaKey);
+                chaptersAdapter.loadChapters();
             }
         });
     }

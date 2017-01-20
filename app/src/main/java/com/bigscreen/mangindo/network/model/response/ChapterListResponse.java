@@ -11,14 +11,14 @@ import java.util.List;
 public class ChapterListResponse implements Parcelable {
 
     @SerializedName("komik")
-    private List<Chapter> komik;
+    private List<Chapter> comics;
 
-    public List<Chapter> getKomik() {
-        return komik;
+    public List<Chapter> getComics() {
+        return comics;
     }
 
-    public void setKomik(List<Chapter> komik) {
-        this.komik = komik;
+    public void setComics(List<Chapter> comics) {
+        this.comics = comics;
     }
 
 
@@ -29,14 +29,14 @@ public class ChapterListResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(this.komik);
+        dest.writeTypedList(this.comics);
     }
 
     public ChapterListResponse() {
     }
 
     protected ChapterListResponse(Parcel in) {
-        this.komik = in.createTypedArrayList(Chapter.CREATOR);
+        this.comics = in.createTypedArrayList(Chapter.CREATOR);
     }
 
     public static final Parcelable.Creator<ChapterListResponse> CREATOR = new Parcelable.Creator<ChapterListResponse>() {
@@ -54,7 +54,7 @@ public class ChapterListResponse implements Parcelable {
     @Override
     public String toString() {
         return "ChapterListResponse{" +
-                "komik=" + komik +
+                "comics=" + comics +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.bigscreen.mangindo.stored;
 
 
+import com.bigscreen.mangindo.network.model.response.ChapterListResponse;
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse;
 import com.google.gson.Gson;
 
@@ -9,6 +10,7 @@ import static com.bigscreen.mangindo.common.Utils.isTextNotNullOrEmpty;
 public class StoredDataService {
 
     private static final String KEY_NEW_RELEASE = "COMIC_NEW_RELEASE";
+    private static final String KEY_CHAPTER_FORMAT = "COMIC_CHAPTER_%s";
 
     private PreferenceService preferenceService;
     private Gson gson;
@@ -28,6 +30,22 @@ public class StoredDataService {
         String responseString = preferenceService.getString(KEY_NEW_RELEASE, null);
         if (isTextNotNullOrEmpty(responseString)) {
             callback.onDataFound(gson.fromJson(responseString, NewReleaseResponse.class));
+        } else {
+            callback.onDataNotFound();
+        }
+    }
+
+    public void saveChapterOfComic(String comicHiddenKey, ChapterListResponse chapterListResponse) {
+        String responseString = gson.toJson(chapterListResponse, ChapterListResponse.class);
+        String formattedKey = String.format(KEY_CHAPTER_FORMAT, comicHiddenKey);
+        preferenceService.saveString(formattedKey, responseString);
+    }
+
+    public void pullStoredChapterOfComic(String comicHiddenKey, OnGetSavedDataListener<ChapterListResponse> callback) {
+        String formattedKey = String.format(KEY_CHAPTER_FORMAT, comicHiddenKey);
+        String responseString = preferenceService.getString(formattedKey, null);
+        if (isTextNotNullOrEmpty(responseString)) {
+            callback.onDataFound(gson.fromJson(responseString, ChapterListResponse.class));
         } else {
             callback.onDataNotFound();
         }

@@ -13,6 +13,7 @@ import com.bigscreen.mangindo.network.loader.ChapterListLoader;
 import com.bigscreen.mangindo.network.model.Chapter;
 import com.bigscreen.mangindo.network.model.response.ChapterListResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;
+import com.bigscreen.mangindo.stored.StoredDataService;
 
 import java.util.List;
 
@@ -23,15 +24,21 @@ public class ChaptersAdapter extends BaseAdapter implements ChapterListLoader.On
     private List<Chapter> chapters;
     private ChapterListLoader chapterListLoader;
     private OnLoadDataListener loadDataListener;
+    private StoredDataService storedDataService;
 
-    public ChaptersAdapter(Context context, OnLoadDataListener loadDataListener, MangaApiService apiService) {
+    private String comicHiddenKey;
+
+    public ChaptersAdapter(Context context, OnLoadDataListener loadDataListener, String comicHiddenKey,
+                           StoredDataService storedDataService, MangaApiService apiService) {
         this.context = context;
         this.loadDataListener = loadDataListener;
+        this.comicHiddenKey = comicHiddenKey;
+        this.storedDataService = storedDataService;
         chapterListLoader = new ChapterListLoader(apiService, this);
     }
 
-    public void loadChapters(String mangaTitle) {
-        chapterListLoader.loadChapterList(mangaTitle);
+    public void loadChapters() {
+        chapterListLoader.loadChapterList(comicHiddenKey);
     }
 
     @Override
@@ -61,10 +68,6 @@ public class ChaptersAdapter extends BaseAdapter implements ChapterListLoader.On
         return itemView;
     }
 
-    public List<Chapter> getChapters() {
-        return chapters;
-    }
-
     public void setChapters(List<Chapter> chapters) {
         this.chapters = chapters;
         notifyDataSetChanged();
@@ -80,13 +83,29 @@ public class ChaptersAdapter extends BaseAdapter implements ChapterListLoader.On
     public void onSuccessLoadData(ChapterListResponse chapterListResponse) {
         Log.d(Constant.LOG_TAG, "success load data\n" + chapterListResponse.toString());
         loadDataListener.onSuccess();
-        setChapters(chapterListResponse.getKomik());
+        setChapters(chapterListResponse.getComics());
+        storedDataService.saveChapterOfComic(comicHiddenKey, chapterListResponse);
     }
 
     @Override
     public void onFailedLoadData(String message) {
         Log.e(Constant.LOG_TAG, "failed load data, " + message);
-        loadDataListener.onError(message);
+        loadDataFromStoredService(message);
+    }
+
+    private void loadDataFromStoredService(final String networkErrorMessage) {
+        storedDataService.pullStoredChapterOfComic(comicHiddenKey, new StoredDataService.OnGetSavedDataListener<ChapterListResponse>() {
+            @Override
+            public void onDataFound(ChapterListResponse savedData) {
+                loadDataListener.onSuccess();
+                setChapters(savedData.getComics());
+            }
+
+            @Override
+            public void onDataNotFound() {
+                loadDataListener.onError(networkErrorMessage);
+            }
+        });
     }
 
     public void onParentDestroyed() {
