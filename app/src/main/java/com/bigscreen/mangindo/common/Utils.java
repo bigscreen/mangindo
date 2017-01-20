@@ -13,4 +13,8 @@ public class Utils {
         }
         return url;
     }
+
+    public static boolean isTextNotNullOrEmpty(String text) {
+        return !(text == null || text.isEmpty());
+    }
 }

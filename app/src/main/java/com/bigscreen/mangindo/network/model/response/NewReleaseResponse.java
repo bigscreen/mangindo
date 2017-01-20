@@ -11,14 +11,14 @@ import java.util.List;
 public class NewReleaseResponse implements Parcelable {
 
     @SerializedName("komik")
-    private List<Manga> komik;
+    private List<Manga> comics;
 
-    public List<Manga> getKomik() {
-        return komik;
+    public List<Manga> getComics() {
+        return comics;
     }
 
     public void setMangas(List<Manga> komik) {
-        this.komik = komik;
+        this.comics = komik;
     }
 
     public NewReleaseResponse() {
@@ -31,11 +31,11 @@ public class NewReleaseResponse implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(this.komik);
+        dest.writeTypedList(this.comics);
     }
 
     protected NewReleaseResponse(Parcel in) {
-        this.komik = in.createTypedArrayList(Manga.CREATOR);
+        this.comics = in.createTypedArrayList(Manga.CREATOR);
     }
 
     public static final Parcelable.Creator<NewReleaseResponse> CREATOR = new Parcelable.Creator<NewReleaseResponse>() {
@@ -53,7 +53,7 @@ public class NewReleaseResponse implements Parcelable {
     @Override
     public String toString() {
         return "NewReleaseResponse{" +
-                "komik=" + komik +
+                "comics=" + comics +
                 '}';
     }
 }

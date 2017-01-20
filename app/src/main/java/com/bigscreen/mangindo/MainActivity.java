@@ -28,6 +28,7 @@ import com.bigscreen.mangindo.common.IntentKey;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
 import com.bigscreen.mangindo.network.service.MangaApiService;
+import com.bigscreen.mangindo.stored.StoredDataService;
 
 import javax.inject.Inject;
 
@@ -44,6 +45,9 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
     private Animation animSlideDown;
 
     private boolean isLoading;
+
+    @Inject
+    StoredDataService storedDataService;
 
     @Inject
     MangaApiService mangaApiService;
@@ -64,7 +68,7 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
         inputSearch = (EditText) findViewById(R.id.input_search);
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim);
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim);
-        newReleaseAdapter = new NewReleaseAdapter(this, this, mangaApiService);
+        newReleaseAdapter = new NewReleaseAdapter(this, this, storedDataService, mangaApiService);
         layoutSwipeRefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent));
 
         gridMangaNewRelease.setLayoutManager(new GridLayoutManager(this, 3));

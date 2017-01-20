@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.common.Constant;
+import com.bigscreen.mangindo.stored.StoredDataService;
 import com.bigscreen.mangindo.item.MangaViewHolder;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
@@ -34,13 +35,16 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private NewReleaseLoader newReleaseLoader;
     private OnLoadDataListener loadDataListener;
     private OnListItemClickListener listItemClickListener;
+    private StoredDataService storedDataService;
 
     private int sortBy = SORT_BY_DATE;
     private String searchKeyword = "";
 
-    public NewReleaseAdapter(Context context, OnLoadDataListener loadDataListener, MangaApiService apiService) {
+    public NewReleaseAdapter(Context context, OnLoadDataListener loadDataListener,
+                             StoredDataService storedDataService, MangaApiService apiService) {
         this.context = context;
         this.loadDataListener = loadDataListener;
+        this.storedDataService = storedDataService;
         newReleaseLoader = new NewReleaseLoader(apiService, this);
     }
 
@@ -77,10 +81,6 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    public List<Manga> getMangaList() {
-        return mangaList;
-    }
-
     @Override
     public void onPrepareLoadData() {
         Log.d(Constant.LOG_TAG, "load data...");
@@ -91,13 +91,29 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onSuccessLoadData(NewReleaseResponse newReleaseResponse) {
         Log.d(Constant.LOG_TAG, "success load data\n" + newReleaseResponse.toString());
         loadDataListener.onSuccess();
-        setMangaList(newReleaseResponse.getKomik());
+        setMangaList(newReleaseResponse.getComics());
+        storedDataService.saveNewReleasedComic(newReleaseResponse);
     }
 
     @Override
     public void onFailedLoadData(String message) {
         Log.e(Constant.LOG_TAG, "failed load data, " + message);
-        loadDataListener.onError(message);
+        loadDataFromPreference(message);
+    }
+
+    private void loadDataFromPreference(final String networkErrorMessage) {
+        storedDataService.pullStoredNewReleasedComic(new StoredDataService.OnGetSavedDataListener<NewReleaseResponse>() {
+            @Override
+            public void onDataFound(NewReleaseResponse savedData) {
+                loadDataListener.onSuccess();
+                setMangaList(savedData.getComics());
+            }
+
+            @Override
+            public void onDataNotFound() {
+                loadDataListener.onError(networkErrorMessage);
+            }
+        });
     }
 
     public void onParentDestroyed() {

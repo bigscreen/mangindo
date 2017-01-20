@@ -1,14 +1,14 @@
-package com.bigscreen.mangindo.helper;
+package com.bigscreen.mangindo.stored;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class PrefHelper {
+public class PreferenceService {
 
     private SharedPreferences sharedPreference;
 
-    public PrefHelper(Context context) {
+    public PreferenceService(Context context) {
         sharedPreference = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
     }
 
@@ -16,16 +16,15 @@ public class PrefHelper {
         return sharedPreference.getString(key, defValue);
     }
 
-    public String setString(String key, String value) {
+    public void saveString(String key, String value) {
         sharedPreference.edit().putString(key, value).apply();
-        return key;
     }
 
     public int getInt(String key, int defValue) {
         return sharedPreference.getInt(key, defValue);
     }
 
-    public void setInt(String key, int value) {
+    public void saveInt(String key, int value) {
         sharedPreference.edit().putInt(key, value).apply();
     }
 
@@ -33,7 +32,7 @@ public class PrefHelper {
         return sharedPreference.getBoolean(key, defValue);
     }
 
-    public void setBoolean(String key, boolean value) {
+    public void saveBoolean(String key, boolean value) {
         sharedPreference.edit().putBoolean(key, value).apply();
     }
 
@@ -41,10 +40,8 @@ public class PrefHelper {
         return sharedPreference.getLong(key, defValue);
     }
 
-    public void setLong(String key, long value) {
-        SharedPreferences.Editor editor = sharedPreference.edit();
-        editor.putLong(key, value);
-        editor.apply();
+    public void saveLong(String key, long value) {
+        sharedPreference.edit().putLong(key, value).apply();
     }
 
     public void remove(String key) {
