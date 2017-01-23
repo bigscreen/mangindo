@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,23 +43,42 @@
                 android:paddingTop="10dp"
                 android:visibility="gone">
 
-                <EditText
-                    android:id="@+id/input_search"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_search"
-                    android:hint="@string/search"
-                    android:imeActionId="@+id/ime_action_search"
-                    android:imeActionLabel="@string/search"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:paddingBottom="6dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="6dp"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/input_search"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="@string/search"
+                        android:imeActionId="@+id/ime_action_search"
+                        android:imeActionLabel="@string/search"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingBottom="6dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="6dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/image_clear_search"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="?selectableItemBackground"
+                        android:padding="6dp"
+                        app:srcCompat="@drawable/ic_clear_black"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
 
             </FrameLayout>
 

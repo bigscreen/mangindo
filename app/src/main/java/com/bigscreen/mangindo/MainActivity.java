@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,7 +33,8 @@ import com.bigscreen.mangindo.stored.StoredDataService;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener {
+public class MainActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener,
+        View.OnClickListener {
 
     private SwipeRefreshLayout layoutSwipeRefresh;
     private RecyclerView gridMangaNewRelease;
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
 
     private FrameLayout layoutSearch;
     private EditText inputSearch;
+    private ImageView imageClearSearch;
     private Animation animSlideUp;
     private Animation animSlideDown;
 
@@ -66,6 +69,7 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
         progressLoading = (ProgressBar) findViewById(R.id.progress_loading);
         layoutSearch = (FrameLayout) findViewById(R.id.layout_search);
         inputSearch = (EditText) findViewById(R.id.input_search);
+        imageClearSearch = (ImageView) findViewById(R.id.image_clear_search);
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim);
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim);
         newReleaseAdapter = new NewReleaseAdapter(this, this, storedDataService, mangaApiService);
@@ -110,6 +114,7 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
                 newReleaseAdapter.loadManga();
             }
         });
+        imageClearSearch.setOnClickListener(this);
     }
 
     @Override
@@ -199,6 +204,15 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
             }
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.image_clear_search:
+                inputSearch.setText("");
+                break;
         }
     }
 
