@@ -50,6 +50,9 @@ android {
                     output.outputFile.name.replace(".apk", "-${variant.versionName}-${getDate()}.apk"))
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 def getDate() {
