@@ -10,15 +10,52 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
-        versionName "0.0.3"
+        versionName "1.0.0"
         vectorDrawables.useSupportLibrary = true
+    }
+    signingConfigs {
+        debug {
+            storeFile file('mangindo_key_debug.jks')
+            storePassword 'm4ngind0'
+            keyAlias 'bigscreen'
+            keyPassword 'm4ngind0'
+        }
+        release {
+            storeFile file('mangindo_key_release.jks')
+            storePassword 'm4ngind0'
+            keyAlias 'bigscreen'
+            keyPassword 'm4ngind0'
+        }
     }
     buildTypes {
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
         }
     }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    output.outputFile.name.replace(".apk", "-${variant.versionName}-${getDate()}.apk"))
+        }
+    }
+}
+
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('ddMMyyyy')
+    return formattedDate
 }
 
 dependencies {
