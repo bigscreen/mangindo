@@ -1,6 +1,7 @@
 package com.bigscreen.mangindo.content;
 
 import android.content.DialogInterface;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -8,12 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ProgressBar;
 
 import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.base.BaseActivity;
 import com.bigscreen.mangindo.common.Constant;
 import com.bigscreen.mangindo.common.IntentKey;
+import com.bigscreen.mangindo.databinding.ActivityMangaContentBinding;
 import com.bigscreen.mangindo.listener.OnContentImageClickListener;
 import com.bigscreen.mangindo.network.model.MangaImage;
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse;
@@ -25,10 +26,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MangaContentActivity extends BaseActivity implements MangaContentLoader.OnLoadMangaContentListListener, OnContentImageClickListener {
+public class MangaContentActivity extends BaseActivity implements MangaContentLoader.OnLoadMangaContentListListener,
+        OnContentImageClickListener {
 
-    private ViewPager pagerMangaImages;
-    private ProgressBar progressLoading;
+    private ActivityMangaContentBinding binding;
     private Animation animSlideUp;
     private Animation animSlideDown;
     private MangaContentPagerAdapter pagerAdapter;
@@ -48,7 +49,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLo
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getAppDeps().inject(this);
-        setContentView(R.layout.activity_manga_content);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_manga_content);
 
         if (getIntent().hasExtra(IntentKey.MANGA_KEY) && getIntent().hasExtra(IntentKey.MANGA_TITLE)
                 && getIntent().hasExtra(IntentKey.CHAPTER_KEY)) {
@@ -60,8 +61,6 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLo
             finish();
         }
 
-        pagerMangaImages = (ViewPager) findViewById(R.id.pager_manga_images);
-        progressLoading = (ProgressBar) findViewById(R.id.progress_loading);
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim);
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim);
         pagerAdapter = new MangaContentPagerAdapter(getSupportFragmentManager());
@@ -70,10 +69,10 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLo
         setToolbarTitle(mangaTitle, true);
         setToolbarSubtitle(String.format(getString(R.string.page_), 1));
 
-        pagerMangaImages.setAdapter(pagerAdapter);
+        binding.pagerMangaImages.setAdapter(pagerAdapter);
         mangaContentLoader.loadContentList(mangaKey, chapterKey);
 
-        pagerMangaImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        binding.pagerMangaImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -81,7 +80,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLo
 
             @Override
             public void onPageSelected(int position) {
-                getSupportActionBar().setSubtitle(String.format(getString(R.string.manga_page_index), (position + 1), pageSize));
+                setToolbarSubtitle(String.format(getString(R.string.manga_page_index), (position + 1), pageSize));
             }
 
             @Override
@@ -99,24 +98,24 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLo
 
     @Override
     public void onPrepareLoadData() {
-        progressLoading.setVisibility(View.VISIBLE);
+        binding.progressLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onSuccessLoadData(MangaContentListResponse mangaContentListResponse) {
-        progressLoading.setVisibility(View.GONE);
+        binding.progressLoading.setVisibility(View.GONE);
         setContent(mangaContentListResponse.getChapter());
         storedDataService.saveContentOfComic(mangaKey, chapterKey, mangaContentListResponse);
     }
 
     @Override
     public void onFailedLoadData(final String message) {
-        progressLoading.setVisibility(View.GONE);
+        binding.progressLoading.setVisibility(View.GONE);
         storedDataService.pullStoredContentOfComic(mangaKey, chapterKey,
                 new StoredDataService.OnGetSavedDataListener<MangaContentListResponse>() {
             @Override
             public void onDataFound(MangaContentListResponse savedData) {
-                progressLoading.setVisibility(View.GONE);
+                binding.progressLoading.setVisibility(View.GONE);
                 setContent(savedData.getChapter());
             }
 

@@ -63,6 +63,7 @@ public class ChapterListActivity extends BaseActivity implements OnLoadDataListe
         binding.imageMangaCover.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryOverlay_50));
         binding.buttonInfo.setOnClickListener(this);
         Glide.with(this).load(manga.getComicIcon())
+                .error(R.drawable.ic_image_error)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(binding.imageMangaCover);
     }
