@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.item;
+package com.bigscreen.mangindo.newrelease;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -18,16 +18,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MangaViewHolder extends RecyclerView.ViewHolder {
+import static android.support.v7.widget.RecyclerView.NO_POSITION;
+
+public class NewReleaseViewHolder extends RecyclerView.ViewHolder {
 
     private Context context;
     private TextView textTitle;
     private TextView textChapter;
     private ImageView imageCover;
-    private int position;
     private OnMangaClickListener clickListener;
 
-    public MangaViewHolder(View itemView, Context context, OnMangaClickListener clickListener) {
+    public NewReleaseViewHolder(View itemView, Context context, OnMangaClickListener clickListener) {
         super(itemView);
         this.context = context;
         this.clickListener = clickListener;
@@ -46,13 +47,13 @@ public class MangaViewHolder extends RecyclerView.ViewHolder {
         viewClicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clickListener.onMangaClick(position);
+                if (getAdapterPosition() != NO_POSITION)
+                    clickListener.onMangaClick(getAdapterPosition());
             }
         });
     }
 
-    public void bindData(Manga manga, int position) {
-        this.position = position;
+    public void bindData(Manga manga) {
         textTitle.setText(manga.getTitle());
         textChapter.setText(String.format(context.getString(R.string.chapter_), manga.getHiddenNewChapter()));
         Glide.with(context).load(manga.getComicIcon())
@@ -63,8 +64,8 @@ public class MangaViewHolder extends RecyclerView.ViewHolder {
                 .into(imageCover);
     }
 
-    public void bindDataSearch(Manga manga, int position, String keyword) {
-        bindData(manga, position);
+    public void bindDataSearch(Manga manga, String keyword) {
+        bindData(manga);
         textTitle.setText(getSearchSpannedTitle(manga.getTitle(), keyword));
     }
 

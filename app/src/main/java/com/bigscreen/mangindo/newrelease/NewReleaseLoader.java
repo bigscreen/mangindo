@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.network.loader;
+package com.bigscreen.mangindo.newrelease;
 
 import com.bigscreen.mangindo.network.NetworkError;
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse;

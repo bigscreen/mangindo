@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo;
+package com.bigscreen.mangindo.newrelease;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bigscreen.mangindo.adapter.NewReleaseAdapter;
+import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.base.BaseActivity;
 import com.bigscreen.mangindo.common.IntentKey;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
@@ -34,7 +34,7 @@ import com.bigscreen.mangindo.stored.StoredDataService;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener,
+public class NewReleaseActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener,
         View.OnClickListener {
 
     private SwipeRefreshLayout layoutSwipeRefresh;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity implements OnLoadDataListener, On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getAppDeps().inject(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_new_release);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);

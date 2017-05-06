@@ -1,10 +1,9 @@
 package com.bigscreen.mangindo.deps;
 
 import com.bigscreen.mangindo.manga.chapter.ChapterListActivity;
-import com.bigscreen.mangindo.MainActivity;
+import com.bigscreen.mangindo.newrelease.NewReleaseActivity;
 import com.bigscreen.mangindo.manga.content.MangaContentActivity;
 import com.bigscreen.mangindo.network.NetworkModule;
-import com.bigscreen.mangindo.network.module.MangaModule;
 import com.bigscreen.mangindo.stored.StoredDataModule;
 
 import javax.inject.Singleton;
@@ -20,7 +19,7 @@ import dagger.Component;
 })
 public interface AppDeps {
 
-    void inject(MainActivity mainActivity);
+    void inject(NewReleaseActivity newReleaseActivity);
 
     void inject(ChapterListActivity chapterListActivity);
 

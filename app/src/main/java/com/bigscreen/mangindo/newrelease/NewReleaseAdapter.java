@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.adapter;
+package com.bigscreen.mangindo.newrelease;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.common.Constant;
 import com.bigscreen.mangindo.stored.StoredDataService;
-import com.bigscreen.mangindo.item.MangaViewHolder;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
-import com.bigscreen.mangindo.network.loader.NewReleaseLoader;
 import com.bigscreen.mangindo.network.model.Manga;
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;
@@ -24,7 +22,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
-        NewReleaseLoader.OnLoadNewReleaseListener, MangaViewHolder.OnMangaClickListener {
+        NewReleaseLoader.OnLoadNewReleaseListener, NewReleaseViewHolder.OnMangaClickListener {
 
     public static final int SORT_BY_DATE = 1;
     public static final int SORT_BY_TITLE = 2;
@@ -55,15 +53,15 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_manga_cover, parent, false);
-        return new MangaViewHolder(view, context, this);
+        return new NewReleaseViewHolder(view, context, this);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (searchKeyword.isEmpty())
-            ((MangaViewHolder) holder).bindData(getItem(position), position);
+            ((NewReleaseViewHolder) holder).bindData(getItem(position));
         else
-            ((MangaViewHolder) holder).bindDataSearch(getItem(position), position, searchKeyword);
+            ((NewReleaseViewHolder) holder).bindDataSearch(getItem(position), searchKeyword);
     }
 
     @Override

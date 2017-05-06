@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.network.module;
+package com.bigscreen.mangindo.deps;
 
 import com.bigscreen.mangindo.network.service.MangaApiService;
 import com.bigscreen.mangindo.network.service.MangaNetworkService;

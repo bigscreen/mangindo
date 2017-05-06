@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.bigscreen.mangindo.MainActivity">
+    tools:context="com.bigscreen.mangindo.newrelease.NewReleaseActivity">
 
     <include layout="@layout/toolbar_main" />
 
