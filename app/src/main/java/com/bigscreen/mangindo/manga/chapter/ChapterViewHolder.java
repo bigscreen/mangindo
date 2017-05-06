@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.item;
+package com.bigscreen.mangindo.manga.chapter;
 
 
 import android.support.v7.widget.RecyclerView;

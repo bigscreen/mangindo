@@ -1,6 +1,6 @@
 package com.bigscreen.mangindo.deps;
 
-import com.bigscreen.mangindo.ChapterListActivity;
+import com.bigscreen.mangindo.manga.chapter.ChapterListActivity;
 import com.bigscreen.mangindo.MainActivity;
 import com.bigscreen.mangindo.MangaContentActivity;
 import com.bigscreen.mangindo.network.NetworkModule;

@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo;
+package com.bigscreen.mangindo.manga.chapter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.bigscreen.mangindo.adapter.ChaptersAdapter;
+import com.bigscreen.mangindo.MangaContentActivity;
+import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.base.BaseActivity;
 import com.bigscreen.mangindo.common.Constant;
 import com.bigscreen.mangindo.common.IntentKey;

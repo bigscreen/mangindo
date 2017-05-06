@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.adapter;
+package com.bigscreen.mangindo.manga.chapter;
 
 
 import android.content.Context;
@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 
 import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.common.Constant;
-import com.bigscreen.mangindo.item.ChapterViewHolder;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
-import com.bigscreen.mangindo.network.loader.ChapterListLoader;
 import com.bigscreen.mangindo.network.model.Chapter;
 import com.bigscreen.mangindo.network.model.response.ChapterListResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;

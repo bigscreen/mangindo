@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChapterListActivity"
+            android:name=".manga.chapter.ChapterListActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MangaContentActivity"
