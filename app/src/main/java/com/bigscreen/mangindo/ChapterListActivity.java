@@ -4,11 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,6 +19,8 @@ import com.bigscreen.mangindo.common.Constant;
 import com.bigscreen.mangindo.common.IntentKey;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
+import com.bigscreen.mangindo.manga.info.MangaInfoActivity;
+import com.bigscreen.mangindo.network.model.Manga;
 import com.bigscreen.mangindo.network.service.MangaApiService;
 import com.bigscreen.mangindo.stored.StoredDataService;
 import com.bumptech.glide.Glide;
@@ -26,17 +28,17 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import javax.inject.Inject;
 
-public class ChapterListActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener {
+public class ChapterListActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener,
+        View.OnClickListener {
 
     private CollapsingToolbarLayout collapsingToolbar;
     private ImageView imageMangaCover;
+    private FloatingActionButton buttonInfo;
     private RecyclerView listChapters;
     private ProgressBar progressLoading;
     private ChaptersAdapter chaptersAdapter;
 
-    private String mangaKey;
-    private String mangaCompleteTitle;
-    private String mangaCoverUrl;
+    private Manga manga;
 
     @Inject
     StoredDataService storedDataService;
@@ -50,34 +52,30 @@ public class ChapterListActivity extends BaseActivity implements OnLoadDataListe
         getAppDeps().inject(this);
         setContentView(R.layout.activity_chapter_list);
 
-        mangaKey = getIntent().getStringExtra(IntentKey.MANGA_KEY);
-        mangaCompleteTitle = getIntent().getStringExtra(IntentKey.MANGA_TITLE);
-        mangaCoverUrl = getIntent().getStringExtra(IntentKey.MANGA_COVER_URL);
-        if (mangaKey == null || mangaCompleteTitle == null) {
+        manga = getIntent().getParcelableExtra(IntentKey.MANGA_DATA);
+        if (manga == null) {
             Log.e(Constant.LOG_TAG, "Could not found intent extra");
             finish();
         }
 
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.toolbar_collapsing);
         imageMangaCover = (ImageView) findViewById(R.id.image_manga_cover);
+        buttonInfo = (FloatingActionButton) findViewById(R.id.button_info);
         listChapters = (RecyclerView) findViewById(R.id.list_chapters);
         progressLoading = (ProgressBar) findViewById(R.id.progress_loading);
-        chaptersAdapter = new ChaptersAdapter(this, this, mangaKey, storedDataService, apiService);
+        chaptersAdapter = new ChaptersAdapter(this, this, manga.getHiddenComic(), storedDataService, apiService);
+
         setCollapsingToolbarContent();
         initRecyclerView();
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(mangaCompleteTitle);
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        setToolbarTitle(manga.getTitle(), true);
         chaptersAdapter.loadChapters();
     }
 
     private void setCollapsingToolbarContent() {
-        collapsingToolbar.setTitle(mangaCompleteTitle);
+        collapsingToolbar.setTitle(manga.getTitle());
         imageMangaCover.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryOverlay_50));
-        Glide.with(this).load(mangaCoverUrl)
+        buttonInfo.setOnClickListener(this);
+        Glide.with(this).load(manga.getComicIcon())
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(imageMangaCover);
     }
@@ -87,15 +85,6 @@ public class ChapterListActivity extends BaseActivity implements OnLoadDataListe
         listChapters.setLayoutManager(new LinearLayoutManager(this));
         listChapters.setAdapter(chaptersAdapter);
         chaptersAdapter.setOnListItemClickListener(this);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -128,9 +117,22 @@ public class ChapterListActivity extends BaseActivity implements OnLoadDataListe
     @Override
     public void onListItemClick(int position) {
         Intent intent = new Intent(ChapterListActivity.this, MangaContentActivity.class);
-        intent.putExtra(IntentKey.MANGA_KEY, mangaKey);
-        intent.putExtra(IntentKey.MANGA_TITLE, mangaCompleteTitle);
+        intent.putExtra(IntentKey.MANGA_KEY, manga.getHiddenComic());
+        intent.putExtra(IntentKey.MANGA_TITLE, manga.getTitle());
         intent.putExtra(IntentKey.CHAPTER_KEY, chaptersAdapter.getItem(position).getHiddenChapter());
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button_info:
+                Intent intent = new Intent(ChapterListActivity.this, MangaInfoActivity.class);
+                intent.putExtra(IntentKey.MANGA_DATA, manga);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

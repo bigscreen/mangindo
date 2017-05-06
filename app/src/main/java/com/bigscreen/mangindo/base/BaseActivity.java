@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +23,15 @@ public class BaseActivity extends AppCompatActivity {
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         initToolbar();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initToolbar() {
@@ -57,6 +67,20 @@ public class BaseActivity extends AppCompatActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (editText != null) {
             inputMethodManager.showSoftInput(editText, 0);
+        }
+    }
+
+    protected void setToolbarTitle(String title, boolean showBackButton) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+            getSupportActionBar().setHomeButtonEnabled(showBackButton);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(showBackButton);
+        }
+    }
+
+    protected void setToolbarSubtitle(String subtitle) {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setSubtitle(subtitle);
         }
     }
 

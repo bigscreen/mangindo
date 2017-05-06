@@ -48,6 +48,9 @@
         <activity
             android:name=".MangaContentActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".manga.info.MangaInfoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

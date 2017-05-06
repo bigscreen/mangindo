@@ -36,12 +36,14 @@ public class ChapterViewHolder extends RecyclerView.ViewHolder {
     public void bindData(Chapter chapter) {
         String chapterText, chapterTitle;
         if (chapter.getTitle().contains("-")) {
-            chapterText = chapter.getTitle().split("-")[0];
-            chapterTitle = chapter.getTitle().split("-")[1];
-            if (chapterText.isEmpty())
-                chapterText = getFormattedChapterText(chapter.getHiddenChapter());
-            if (chapterTitle.isEmpty())
-                chapterTitle = chapter.getTitle();
+            String[] titleArray = chapter.getTitle().split(" - ");
+            if (titleArray.length == 2) {
+                chapterText = chapter.getTitle().split(" - ")[0];
+                chapterTitle = chapter.getTitle().split(" - ")[1];
+            } else {
+                chapterText = chapter.getTitle().replace("-", "");
+                chapterTitle = "n/a";
+            }
         } else {
             chapterText = getFormattedChapterText(chapter.getHiddenChapter());
             chapterTitle = chapter.getTitle();

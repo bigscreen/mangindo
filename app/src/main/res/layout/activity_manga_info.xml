@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".manga.info.MangaInfoActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bigscreen.mangindo.manga.info.MangaInfoViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/image_manga_cover"
+                        android:layout_width="120dp"
+                        android:layout_height="165dp"
+                        android:adjustViewBounds="true"
+                        android:background="@color/colorPrimaryOverlay_50"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/text_title_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/image_manga_cover"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@id/image_manga_cover"
+                        android:layout_toRightOf="@id/image_manga_cover"
+                        android:text="@string/author"
+                        android:textColor="@color/textColor"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_title_author"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toEndOf="@id/image_manga_cover"
+                        android:layout_toRightOf="@id/image_manga_cover"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{viewModel.authorName}"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp"
+                        tools:text="Mizaki Kanoto" />
+
+                    <TextView
+                        android:id="@+id/text_title_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_author"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/image_manga_cover"
+                        android:layout_toRightOf="@id/image_manga_cover"
+                        android:text="@string/status"
+                        android:textColor="@color/textColor"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_title_status"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toEndOf="@id/image_manga_cover"
+                        android:layout_toRightOf="@id/image_manga_cover"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{viewModel.status}"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp"
+                        tools:text="On Going" />
+
+                    <TextView
+                        android:id="@+id/text_title_genre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_status"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/image_manga_cover"
+                        android:layout_toRightOf="@id/image_manga_cover"
+                        android:text="@string/genre"
+                        android:textColor="@color/textColor"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_genre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_title_genre"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toEndOf="@id/image_manga_cover"
+                        android:layout_toRightOf="@id/image_manga_cover"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:text="@{viewModel.genre}"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp"
+                        tools:text="Shounen, Action, Adventure, Drama, Fantasy, Horror, Comedy" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/listDividerLight" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/listDividerLight" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/text_title_summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/summary"
+                        android:textColor="@color/textColor"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/text_summary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/text_title_summary"
+                        android:layout_marginTop="4dp"
+                        android:text="@{viewModel.summary}"
+                        android:textColor="@color/textColor"
+                        android:textSize="15sp"
+                        tools:text="@string/lorem_ipsum" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/listDividerLight" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>

@@ -7,6 +7,7 @@
     <color name="textColor">#4d4d4d</color>
     <color name="textColorLight">#686767</color>
     <color name="listDivider">#d7595959</color>
+    <color name="listDividerLight">#8c7c7c7c</color>
 
     <color name="blackOverlay">#a0212121</color>
     <color name="white">#fff</color>

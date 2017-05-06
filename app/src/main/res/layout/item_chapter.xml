@@ -1,49 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
-    android:orientation="horizontal"
-    android:paddingBottom="12dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="12dp">
+    android:orientation="vertical"
+    android:padding="12dp">
 
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center_vertical"
-        app:srcCompat="@drawable/ic_book_black"
-        tools:ignore="ContentDescription" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/text_chapter"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:orientation="vertical">
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textColor"
+        android:textSize="17sp"
+        tools:text="Chapter 200" />
 
-        <TextView
-            android:id="@+id/text_chapter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:textSize="16sp"
-            tools:text="Chapter 200" />
+    <TextView
+        android:id="@+id/text_chapter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/textColorLight"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        tools:text="Title of chapter" />
 
-        <TextView
-            android:id="@+id/text_chapter_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/textColorLight"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:text="Title of chapter" />
-
-    </LinearLayout>
 </LinearLayout>

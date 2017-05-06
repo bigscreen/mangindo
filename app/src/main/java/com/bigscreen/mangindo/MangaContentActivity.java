@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -70,12 +69,8 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
         pagerAdapter = new MangaImagePagerAdapter(getSupportFragmentManager());
         mangaContentListLoader = new MangaContentListLoader(apiService, this);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(mangaTitle);
-            getSupportActionBar().setSubtitle(String.format(getString(R.string.page_), 1));
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        setToolbarTitle(mangaTitle, true);
+        setToolbarSubtitle(String.format(getString(R.string.page_), 1));
 
         pagerMangaImages.setAdapter(pagerAdapter);
         mangaContentListLoader.loadContentList(mangaKey, chapterKey);
@@ -96,15 +91,6 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
 
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -155,7 +141,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
             fragments.add(MangaImageFragment.getInstance(mangaImage.getUrl()));
         }
         pagerAdapter.setFragments(fragments);
-        getSupportActionBar().setSubtitle(String.format(getString(R.string.manga_page_index), 1, pageSize));
+        setToolbarSubtitle(String.format(getString(R.string.manga_page_index), 1, pageSize));
     }
 
     @Override
