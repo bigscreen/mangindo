@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
-    android:orientation="vertical"
-    android:padding="12dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/text_chapter"
-        android:layout_width="wrap_content"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.bigscreen.mangindo.chapter.ChapterItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/textColor"
-        android:textSize="17sp"
-        tools:text="Chapter 200" />
+        android:background="?selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="12dp">
 
-    <TextView
-        android:id="@+id/text_chapter_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/textColorLight"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        tools:text="Title of chapter" />
+        <TextView
+            android:id="@+id/text_chapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{viewModel.chapterText}"
+            android:textColor="@color/textColor"
+            android:textSize="17sp"
+            tools:text="Chapter 200" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/text_chapter_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{viewModel.chapterTitle}"
+            android:textColor="@color/textColorLight"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            tools:text="Title of chapter" />
+
+    </LinearLayout>
+
+</layout>

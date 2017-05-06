@@ -3,57 +3,36 @@ package com.bigscreen.mangindo.chapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
-import com.bigscreen.mangindo.R;
-import com.bigscreen.mangindo.network.model.Chapter;
+import com.bigscreen.mangindo.databinding.ItemChapterBinding;
+
+import static android.support.v7.widget.RecyclerView.NO_POSITION;
 
 public class ChapterViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView textChapter;
-    private TextView textChapterTitle;
-    private OnChapterClickListener clickListener;
+    private final ItemChapterBinding binding;
+    private final OnChapterClickListener clickListener;
 
-    public ChapterViewHolder(View itemView, OnChapterClickListener clickListener) {
-        super(itemView);
+    public ChapterViewHolder(ItemChapterBinding binding, OnChapterClickListener clickListener) {
+        super(binding.getRoot());
+        this.binding = binding;
         this.clickListener = clickListener;
-        inflateView();
+        initViews();
     }
 
-    private void inflateView() {
-        textChapter = (TextView) itemView.findViewById(R.id.text_chapter);
-        textChapterTitle = (TextView) itemView.findViewById(R.id.text_chapter_title);
+    private void initViews() {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (clickListener != null) {
+                if (clickListener != null && getAdapterPosition() != NO_POSITION) {
                     clickListener.onChapterClick(getAdapterPosition());
                 }
             }
         });
     }
 
-    public void bindData(Chapter chapter) {
-        String chapterText, chapterTitle;
-        if (chapter.getTitle().contains("-")) {
-            String[] titleArray = chapter.getTitle().split(" - ");
-            if (titleArray.length == 2) {
-                chapterText = chapter.getTitle().split(" - ")[0];
-                chapterTitle = chapter.getTitle().split(" - ")[1];
-            } else {
-                chapterText = chapter.getTitle().replace("-", "");
-                chapterTitle = "n/a";
-            }
-        } else {
-            chapterText = getFormattedChapterText(chapter.getHiddenChapter());
-            chapterTitle = chapter.getTitle();
-        }
-        textChapter.setText(chapterText);
-        textChapterTitle.setText(chapterTitle);
-    }
-
-    private String getFormattedChapterText(String chapterNumber) {
-        return String.format(itemView.getContext().getString(R.string.chapter_), chapterNumber);
+    public void setViewModel(ChapterItemViewModel viewModel) {
+        binding.setViewModel(viewModel);
     }
 
     public interface OnChapterClickListener {

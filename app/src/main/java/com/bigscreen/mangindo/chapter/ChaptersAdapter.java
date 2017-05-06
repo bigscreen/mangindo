@@ -2,14 +2,15 @@ package com.bigscreen.mangindo.chapter;
 
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.common.Constant;
+import com.bigscreen.mangindo.databinding.ItemChapterBinding;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
 import com.bigscreen.mangindo.network.model.Chapter;
@@ -49,13 +50,14 @@ public class ChaptersAdapter extends RecyclerView.Adapter<ChapterViewHolder> imp
 
     @Override
     public ChapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_chapter, parent, false);
-        return new ChapterViewHolder(view, this);
+        ItemChapterBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),
+                R.layout.item_chapter, parent, false);
+        return new ChapterViewHolder(binding, this);
     }
 
     @Override
     public void onBindViewHolder(ChapterViewHolder holder, int position) {
-        holder.bindData(getItem(position));
+        holder.setViewModel(new ChapterItemViewModel(context.getResources(), getItem(position)));
     }
 
     @Override

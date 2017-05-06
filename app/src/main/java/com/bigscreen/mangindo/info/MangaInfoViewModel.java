@@ -1,11 +1,9 @@
 package com.bigscreen.mangindo.info;
 
 
-import android.databinding.BaseObservable;
-
 import com.bigscreen.mangindo.network.model.Manga;
 
-public class MangaInfoViewModel extends BaseObservable {
+public class MangaInfoViewModel {
 
     private final Manga manga;
 

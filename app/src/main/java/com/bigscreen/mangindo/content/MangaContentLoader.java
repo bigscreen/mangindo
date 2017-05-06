@@ -1,5 +1,6 @@
 package com.bigscreen.mangindo.content;
 
+import com.bigscreen.mangindo.common.Utils;
 import com.bigscreen.mangindo.network.NetworkError;
 import com.bigscreen.mangindo.network.model.MangaImage;
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse;
@@ -58,10 +59,7 @@ public class MangaContentLoader {
         List<MangaImage> mangaImages = mangaContent.getChapter();
         List<MangaImage> newMangaImages = new ArrayList<>();
         for (MangaImage mangaImage : mangaImages) {
-            if (!mangaImage.getUrl().contains("iklan") && !mangaImage.getUrl().contains("all_anime")
-                    && !mangaImage.getUrl().contains("ik.jpg") && !mangaImage.getUrl().contains("rekrut")
-                    && !mangaImage.getUrl().contains("ilan.jpg") && !mangaImage.getUrl().contains("animeindonesia"))
-                newMangaImages.add(mangaImage);
+            if (Utils.isNotAdsUrl(mangaImage.getUrl())) newMangaImages.add(mangaImage);
         }
         mangaContent.setChapter(newMangaImages);
         return mangaContent;
