@@ -12,6 +12,7 @@
     <color name="white">#fff</color>
     <color name="whiteTransparent">#c3ffffff</color>
     <color name="colorPrimaryOverlay">#cc212121</color>
+    <color name="colorPrimaryOverlay_50">#7f212121</color>
 
     <color name="editSearchBackground">#afffffff</color>
 

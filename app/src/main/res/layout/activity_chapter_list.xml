@@ -1,31 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.bigscreen.mangindo.ChapterListActivity">
 
-    <include layout="@layout/toolbar" />
-
-    <FrameLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <ListView
-            android:id="@+id/list_chapters"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_collapsing"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@drawable/list_divider"
-            android:dividerHeight="0.3dp"/>
+            android:layout_height="185dp"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleMarginBottom="16dp"
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarTextAppearance"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-        <ProgressBar
-            android:id="@+id/progress_loading"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
+            <com.bigscreen.mangindo.custom.TopCropImageView
+                android:id="@+id/image_manga_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/white"
+                android:tint="@color/colorPrimaryOverlay_50"
+                tools:ignore="ContentDescription" />
 
-    </FrameLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@null"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways|snap" />
 
-</LinearLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_chapters"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <ProgressBar
+        android:id="@+id/progress_loading"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:visibility="visible" />
+
+</android.support.design.widget.CoordinatorLayout>

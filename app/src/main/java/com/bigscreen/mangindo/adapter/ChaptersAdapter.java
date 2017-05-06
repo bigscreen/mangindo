@@ -1,13 +1,17 @@
 package com.bigscreen.mangindo.adapter;
 
+
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
+import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.common.Constant;
-import com.bigscreen.mangindo.item.ChapterItemView;
+import com.bigscreen.mangindo.item.ChapterViewHolder;
+import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
 import com.bigscreen.mangindo.network.loader.ChapterListLoader;
 import com.bigscreen.mangindo.network.model.Chapter;
@@ -15,9 +19,11 @@ import com.bigscreen.mangindo.network.model.response.ChapterListResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;
 import com.bigscreen.mangindo.stored.StoredDataService;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ChaptersAdapter extends BaseAdapter implements ChapterListLoader.OnLoadChapterListListener {
+public class ChaptersAdapter extends RecyclerView.Adapter<ChapterViewHolder> implements ChapterListLoader.OnLoadChapterListListener,
+        ChapterViewHolder.OnChapterClickListener {
 
     private Context context;
 
@@ -25,6 +31,7 @@ public class ChaptersAdapter extends BaseAdapter implements ChapterListLoader.On
     private ChapterListLoader chapterListLoader;
     private OnLoadDataListener loadDataListener;
     private StoredDataService storedDataService;
+    private OnListItemClickListener listItemClickListener;
 
     private String comicHiddenKey;
 
@@ -34,6 +41,7 @@ public class ChaptersAdapter extends BaseAdapter implements ChapterListLoader.On
         this.loadDataListener = loadDataListener;
         this.comicHiddenKey = comicHiddenKey;
         this.storedDataService = storedDataService;
+        chapters = new ArrayList<>();
         chapterListLoader = new ChapterListLoader(apiService, this);
     }
 
@@ -42,34 +50,28 @@ public class ChaptersAdapter extends BaseAdapter implements ChapterListLoader.On
     }
 
     @Override
-    public int getCount() {
-        return chapters == null ? 0 : chapters.size();
+    public ChapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_chapter, parent, false);
+        return new ChapterViewHolder(view, this);
     }
 
     @Override
+    public void onBindViewHolder(ChapterViewHolder holder, int position) {
+        holder.bindData(getItem(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return chapters.size();
+    }
+
     public Chapter getItem(int position) {
-        return getCount() > 0 ? chapters.get(position) : null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ChapterItemView itemView;
-        if (convertView == null) {
-            itemView = new ChapterItemView(context);
-        } else {
-            itemView = (ChapterItemView) convertView;
-        }
-        itemView.bindData(getItem(position));
-        return itemView;
+        return getItemCount() > 0 && position < getItemCount() ? chapters.get(position) : null;
     }
 
     public void setChapters(List<Chapter> chapters) {
-        this.chapters = chapters;
+        this.chapters.clear();
+        this.chapters.addAll(chapters);
         notifyDataSetChanged();
     }
 
@@ -106,6 +108,16 @@ public class ChaptersAdapter extends BaseAdapter implements ChapterListLoader.On
                 loadDataListener.onError(networkErrorMessage);
             }
         });
+    }
+
+    @Override
+    public void onChapterClick(int position) {
+        if (listItemClickListener != null)
+            listItemClickListener.onListItemClick(position);
+    }
+
+    public void setOnListItemClickListener(OnListItemClickListener listItemClickListener) {
+        this.listItemClickListener = listItemClickListener;
     }
 
     public void onParentDestroyed() {
