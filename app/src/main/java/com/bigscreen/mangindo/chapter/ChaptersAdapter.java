@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.manga.chapter;
+package com.bigscreen.mangindo.chapter;
 
 
 import android.content.Context;

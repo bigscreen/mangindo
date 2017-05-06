@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.manga.content;
+package com.bigscreen.mangindo.content;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

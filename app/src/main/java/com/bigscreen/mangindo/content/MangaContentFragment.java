@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.manga.content;
+package com.bigscreen.mangindo.content;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,7 +34,7 @@ public class MangaContentFragment extends Fragment implements PhotoViewAttacher.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_manga_image, container, false);
+        View view = inflater.inflate(R.layout.fragment_manga_content, container, false);
         imageManga = (PhotoView) view.findViewById(R.id.image_manga);
         imageManga.setOnViewTapListener(this);
         String imageUrl = getArguments().getString(KEY_IMAGE_URL);

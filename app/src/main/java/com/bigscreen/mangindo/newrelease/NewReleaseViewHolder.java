@@ -32,19 +32,14 @@ public class NewReleaseViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.context = context;
         this.clickListener = clickListener;
-        inflateView(itemView);
+        inflateView();
     }
 
-    private void inflateView(View itemView) {
+    private void inflateView() {
         textTitle = (TextView) itemView.findViewById(R.id.text_title);
         textChapter = (TextView) itemView.findViewById(R.id.text_chapter);
         imageCover = (ImageView) itemView.findViewById(R.id.image_cover);
-        initClicker(itemView);
-    }
-
-    private void initClicker(View itemView) {
-        View viewClicker = itemView.findViewById(R.id.view_clicker);
-        viewClicker.setOnClickListener(new View.OnClickListener() {
+        itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getAdapterPosition() != NO_POSITION)

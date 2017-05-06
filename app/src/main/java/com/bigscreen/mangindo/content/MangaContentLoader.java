@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.manga.content;
+package com.bigscreen.mangindo.content;
 
 import com.bigscreen.mangindo.network.NetworkError;
 import com.bigscreen.mangindo.network.model.MangaImage;

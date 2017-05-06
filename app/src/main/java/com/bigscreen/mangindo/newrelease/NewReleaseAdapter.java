@@ -52,7 +52,7 @@ public class NewReleaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_manga_cover, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_new_release, parent, false);
         return new NewReleaseViewHolder(view, context, this);
     }
 

@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.manga.info;
+package com.bigscreen.mangindo.info;
 
 
 import android.databinding.DataBindingUtil;

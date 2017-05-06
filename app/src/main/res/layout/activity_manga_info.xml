@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".manga.info.MangaInfoActivity">
+    tools:context=".info.MangaInfoActivity">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.bigscreen.mangindo.manga.info.MangaInfoViewModel" />
+            type="com.bigscreen.mangindo.info.MangaInfoViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout

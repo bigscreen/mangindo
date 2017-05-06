@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.manga.content;
+package com.bigscreen.mangindo.content;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;

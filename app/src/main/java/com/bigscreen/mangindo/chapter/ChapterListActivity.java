@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.manga.chapter;
+package com.bigscreen.mangindo.chapter;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,14 +13,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.bigscreen.mangindo.manga.content.MangaContentActivity;
+import com.bigscreen.mangindo.content.MangaContentActivity;
 import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.base.BaseActivity;
 import com.bigscreen.mangindo.common.Constant;
 import com.bigscreen.mangindo.common.IntentKey;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
-import com.bigscreen.mangindo.manga.info.MangaInfoActivity;
+import com.bigscreen.mangindo.info.MangaInfoActivity;
 import com.bigscreen.mangindo.network.model.Manga;
 import com.bigscreen.mangindo.network.service.MangaApiService;
 import com.bigscreen.mangindo.stored.StoredDataService;

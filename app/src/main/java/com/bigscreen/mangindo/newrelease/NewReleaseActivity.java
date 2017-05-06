@@ -28,7 +28,7 @@ import com.bigscreen.mangindo.base.BaseActivity;
 import com.bigscreen.mangindo.common.IntentKey;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
-import com.bigscreen.mangindo.manga.chapter.ChapterListActivity;
+import com.bigscreen.mangindo.chapter.ChapterListActivity;
 import com.bigscreen.mangindo.network.service.MangaApiService;
 import com.bigscreen.mangindo.stored.StoredDataService;
 
