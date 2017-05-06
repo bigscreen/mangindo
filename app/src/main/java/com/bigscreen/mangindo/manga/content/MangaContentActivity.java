@@ -25,15 +25,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MangaContentActivity extends BaseActivity implements MangaContentListLoader.OnLoadMangaContentListListener, OnContentImageClickListener {
+public class MangaContentActivity extends BaseActivity implements MangaContentLoader.OnLoadMangaContentListListener, OnContentImageClickListener {
 
     private ViewPager pagerMangaImages;
     private ProgressBar progressLoading;
     private Animation animSlideUp;
     private Animation animSlideDown;
-    private MangaImagePagerAdapter pagerAdapter;
+    private MangaContentPagerAdapter pagerAdapter;
 
-    private MangaContentListLoader mangaContentListLoader;
+    private MangaContentLoader mangaContentLoader;
 
     private int pageSize;
     private String mangaKey = "", mangaTitle = "", chapterKey = "";
@@ -64,14 +64,14 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
         progressLoading = (ProgressBar) findViewById(R.id.progress_loading);
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim);
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim);
-        pagerAdapter = new MangaImagePagerAdapter(getSupportFragmentManager());
-        mangaContentListLoader = new MangaContentListLoader(apiService, this);
+        pagerAdapter = new MangaContentPagerAdapter(getSupportFragmentManager());
+        mangaContentLoader = new MangaContentLoader(apiService, this);
 
         setToolbarTitle(mangaTitle, true);
         setToolbarSubtitle(String.format(getString(R.string.page_), 1));
 
         pagerMangaImages.setAdapter(pagerAdapter);
-        mangaContentListLoader.loadContentList(mangaKey, chapterKey);
+        mangaContentLoader.loadContentList(mangaKey, chapterKey);
 
         pagerMangaImages.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -93,7 +93,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
 
     @Override
     protected void onDestroy() {
-        mangaContentListLoader.unSubscribe();
+        mangaContentLoader.unSubscribe();
         super.onDestroy();
     }
 
@@ -125,7 +125,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
                 showAlert("Error", message, "Reload", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mangaContentListLoader.loadContentList(mangaKey, chapterKey);
+                        mangaContentLoader.loadContentList(mangaKey, chapterKey);
                     }
                 });
             }
@@ -134,9 +134,9 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLi
 
     private void setContent(List<MangaImage> mangaImages) {
         pageSize = mangaImages.size();
-        List<MangaImageFragment> fragments = new ArrayList<>();
+        List<MangaContentFragment> fragments = new ArrayList<>();
         for (MangaImage mangaImage : mangaImages) {
-            fragments.add(MangaImageFragment.getInstance(mangaImage.getUrl()));
+            fragments.add(MangaContentFragment.getInstance(mangaImage.getUrl()));
         }
         pagerAdapter.setFragments(fragments);
         setToolbarSubtitle(String.format(getString(R.string.manga_page_index), 1, pageSize));

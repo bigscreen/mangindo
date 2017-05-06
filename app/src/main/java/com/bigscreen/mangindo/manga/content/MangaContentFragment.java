@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class MangaImageFragment extends Fragment implements PhotoViewAttacher.OnViewTapListener {
+public class MangaContentFragment extends Fragment implements PhotoViewAttacher.OnViewTapListener {
 
     public static final String KEY_IMAGE_URL = "IMAGE_URL";
 
@@ -23,8 +23,8 @@ public class MangaImageFragment extends Fragment implements PhotoViewAttacher.On
 
     private int fragmentPosition;
 
-    public static MangaImageFragment getInstance(String imageUrl) {
-        MangaImageFragment fragment = new MangaImageFragment();
+    public static MangaContentFragment getInstance(String imageUrl) {
+        MangaContentFragment fragment = new MangaContentFragment();
         Bundle bundle = new Bundle();
         bundle.putString(KEY_IMAGE_URL, imageUrl);
         fragment.setArguments(bundle);

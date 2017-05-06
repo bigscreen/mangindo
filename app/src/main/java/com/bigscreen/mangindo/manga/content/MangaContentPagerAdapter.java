@@ -5,18 +5,18 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-public class MangaImagePagerAdapter extends FragmentStatePagerAdapter {
+public class MangaContentPagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<MangaImageFragment> fragments;
+    private List<MangaContentFragment> fragments;
 
-    public MangaImagePagerAdapter(FragmentManager fm) {
+    public MangaContentPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
-    public MangaImageFragment getItem(int position) {
+    public MangaContentFragment getItem(int position) {
         if (getCount() > 0) {
-            MangaImageFragment fragment = fragments.get(position);
+            MangaContentFragment fragment = fragments.get(position);
             fragment.setFragmentPosition(position);
             return fragment;
         } else {
@@ -34,7 +34,7 @@ public class MangaImagePagerAdapter extends FragmentStatePagerAdapter {
         return "Page " + position;
     }
 
-    public void setFragments(List<MangaImageFragment> fragments) {
+    public void setFragments(List<MangaContentFragment> fragments) {
         this.fragments = fragments;
         notifyDataSetChanged();
     }

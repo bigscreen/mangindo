@@ -11,13 +11,13 @@ import java.util.List;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-public class MangaContentListLoader {
+public class MangaContentLoader {
 
     private MangaApiService mangaApiService;
     private OnLoadMangaContentListListener onLoadMangaContentListListener;
     private CompositeSubscription subscriptions;
 
-    public MangaContentListLoader(MangaApiService apiService, OnLoadMangaContentListListener listener) {
+    public MangaContentLoader(MangaApiService apiService, OnLoadMangaContentListListener listener) {
         mangaApiService = apiService;
         onLoadMangaContentListListener = listener;
         subscriptions = new CompositeSubscription();
