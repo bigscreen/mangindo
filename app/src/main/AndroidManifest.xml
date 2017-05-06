@@ -46,7 +46,7 @@
             android:name=".manga.chapter.ChapterListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MangaContentActivity"
+            android:name=".manga.content.MangaContentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".manga.info.MangaInfoActivity"

@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.bigscreen.mangindo.MangaContentActivity;
+import com.bigscreen.mangindo.manga.content.MangaContentActivity;
 import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.base.BaseActivity;
 import com.bigscreen.mangindo.common.Constant;

@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo;
+package com.bigscreen.mangindo.manga.content;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,13 +10,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 
-import com.bigscreen.mangindo.adapter.MangaImagePagerAdapter;
+import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.base.BaseActivity;
 import com.bigscreen.mangindo.common.Constant;
 import com.bigscreen.mangindo.common.IntentKey;
-import com.bigscreen.mangindo.fragment.MangaImageFragment;
 import com.bigscreen.mangindo.listener.OnContentImageClickListener;
-import com.bigscreen.mangindo.network.loader.MangaContentListLoader;
 import com.bigscreen.mangindo.network.model.MangaImage;
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse;
 import com.bigscreen.mangindo.network.service.MangaApiService;

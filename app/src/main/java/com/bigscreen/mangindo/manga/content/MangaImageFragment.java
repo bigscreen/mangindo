@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.fragment;
+package com.bigscreen.mangindo.manga.content;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
