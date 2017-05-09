@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,23 +18,21 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bigscreen.mangindo.R;
 import com.bigscreen.mangindo.base.BaseActivity;
+import com.bigscreen.mangindo.chapter.ChapterListActivity;
 import com.bigscreen.mangindo.common.IntentKey;
 import com.bigscreen.mangindo.listener.OnListItemClickListener;
 import com.bigscreen.mangindo.listener.OnLoadDataListener;
-import com.bigscreen.mangindo.chapter.ChapterListActivity;
 import com.bigscreen.mangindo.network.service.MangaApiService;
 import com.bigscreen.mangindo.stored.StoredDataService;
 
 import javax.inject.Inject;
 
-public class NewReleaseActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener,
-        View.OnClickListener {
+public class NewReleaseActivity extends BaseActivity implements OnLoadDataListener, OnListItemClickListener {
 
     private SwipeRefreshLayout layoutSwipeRefresh;
     private RecyclerView gridMangaNewRelease;
@@ -44,7 +41,6 @@ public class NewReleaseActivity extends BaseActivity implements OnLoadDataListen
 
     private FrameLayout layoutSearch;
     private EditText inputSearch;
-    private ImageView imageClearSearch;
     private Animation animSlideUp;
     private Animation animSlideDown;
 
@@ -70,53 +66,55 @@ public class NewReleaseActivity extends BaseActivity implements OnLoadDataListen
         progressLoading = (ProgressBar) findViewById(R.id.progress_loading);
         layoutSearch = (FrameLayout) findViewById(R.id.layout_search);
         inputSearch = (EditText) findViewById(R.id.input_search);
-        imageClearSearch = (ImageView) findViewById(R.id.image_clear_search);
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim);
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim);
         newReleaseAdapter = new NewReleaseAdapter(this, this, storedDataService, mangaApiService);
+
         layoutSwipeRefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent));
-
-        gridMangaNewRelease.setLayoutManager(new GridLayoutManager(this, 3));
         gridMangaNewRelease.setAdapter(newReleaseAdapter);
-
         newReleaseAdapter.setOnListItemClickListener(this);
+        inputSearch.setOnEditorActionListener(editorActionListener);
+        inputSearch.addTextChangedListener(searchTextWatcher);
+        layoutSwipeRefresh.setOnRefreshListener(pullRefreshListener);
+
         newReleaseAdapter.loadManga();
-
-        inputSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.ime_action_search || id == EditorInfo.IME_ACTION_SEARCH) {
-                    newReleaseAdapter.filterList(inputSearch.getText().toString());
-                    hideKeyboard();
-                    return true;
-                }
-                return false;
-            }
-        });
-        inputSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                newReleaseAdapter.filterList(editable.toString());
-            }
-        });
-        layoutSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                newReleaseAdapter.loadManga();
-            }
-        });
-        imageClearSearch.setOnClickListener(this);
     }
+
+    private TextView.OnEditorActionListener editorActionListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == R.id.ime_action_search || actionId == EditorInfo.IME_ACTION_SEARCH) {
+                newReleaseAdapter.filterList(inputSearch.getText().toString());
+                hideKeyboard();
+                return true;
+            }
+            return false;
+        }
+    };
+
+    private TextWatcher searchTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            newReleaseAdapter.filterList(editable.toString());
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener pullRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            newReleaseAdapter.loadManga();
+        }
+    };
 
     @Override
     public void setTitle(CharSequence title) {
@@ -207,13 +205,8 @@ public class NewReleaseActivity extends BaseActivity implements OnLoadDataListen
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.image_clear_search:
-                inputSearch.setText("");
-                break;
-        }
+    public void clearSearchClick(View view) {
+        inputSearch.setText("");
     }
 
     private void hideSearchLayout() {

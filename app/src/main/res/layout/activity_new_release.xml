@@ -22,7 +22,10 @@
                 android:id="@+id/grid_manga_new_release"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:listitem="@layout/item_new_release" />
 
             <ProgressBar
                 android:id="@+id/progress_loading"
@@ -76,7 +79,8 @@
                         android:background="?selectableItemBackground"
                         android:padding="6dp"
                         app:srcCompat="@drawable/ic_clear_black"
-                        tools:ignore="ContentDescription" />
+                        tools:ignore="ContentDescription"
+                        android:onClick="clearSearchClick"/>
 
                 </LinearLayout>
 
