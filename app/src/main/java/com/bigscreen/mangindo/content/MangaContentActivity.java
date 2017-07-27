@@ -66,7 +66,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLo
         pagerAdapter = new MangaContentPagerAdapter(getSupportFragmentManager());
         mangaContentLoader = new MangaContentLoader(apiService, this);
 
-        setToolbarTitle(mangaTitle, true);
+        setToolbarTitle(String.format("%s - %s", mangaTitle, chapterKey), true);
         setToolbarSubtitle(String.format(getString(R.string.page_), 1));
 
         binding.pagerMangaImages.setAdapter(pagerAdapter);
