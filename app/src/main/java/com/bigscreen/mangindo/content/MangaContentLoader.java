@@ -56,12 +56,12 @@ public class MangaContentLoader {
     }
 
     private MangaContentListResponse getNonAdsMangaContent(MangaContentListResponse mangaContent) {
-        List<MangaImage> mangaImages = mangaContent.getChapter();
+        List<MangaImage> mangaImages = mangaContent.getMangaImages();
         List<MangaImage> newMangaImages = new ArrayList<>();
         for (MangaImage mangaImage : mangaImages) {
             if (Utils.isNotAdsUrl(mangaImage.getUrl())) newMangaImages.add(mangaImage);
         }
-        mangaContent.setChapter(newMangaImages);
+        mangaContent.setMangaImages(newMangaImages);
         return mangaContent;
     }
 

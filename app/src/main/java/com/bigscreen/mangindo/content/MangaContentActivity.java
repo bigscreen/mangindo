@@ -104,7 +104,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLo
     @Override
     public void onSuccessLoadData(MangaContentListResponse mangaContentListResponse) {
         binding.progressLoading.setVisibility(View.GONE);
-        setContent(mangaContentListResponse.getChapter());
+        setContent(mangaContentListResponse.getMangaImages());
         storedDataService.saveContentOfComic(mangaKey, chapterKey, mangaContentListResponse);
     }
 
@@ -116,7 +116,7 @@ public class MangaContentActivity extends BaseActivity implements MangaContentLo
             @Override
             public void onDataFound(MangaContentListResponse savedData) {
                 binding.progressLoading.setVisibility(View.GONE);
-                setContent(savedData.getChapter());
+                setContent(savedData.getMangaImages());
             }
 
             @Override
