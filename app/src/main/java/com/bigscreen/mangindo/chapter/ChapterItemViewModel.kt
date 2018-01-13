@@ -5,7 +5,7 @@ import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.network.model.Chapter
 
 
-class ChapterItemViewModel(val resources: Resources, val chapter: Chapter?) {
+class ChapterItemViewModel(private val resources: Resources, private val chapter: Chapter?) {
 
     var chapterText: String = "N/A"
         get() {

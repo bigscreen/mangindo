@@ -22,26 +22,25 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import javax.inject.Inject
 
 
-class ChapterListActivity: BaseActivity(), OnLoadDataListener, OnListItemClickListener {
+class ChapterListActivity : BaseActivity(), OnLoadDataListener, OnListItemClickListener {
+
+    @Inject lateinit var storedDataService: StoredDataService
+    @Inject lateinit var apiService: MangaApiService
 
     private lateinit var binding: ActivityChapterListBinding
     private lateinit var chaptersAdapter: ChaptersAdapter
     private lateinit var manga: Manga
-
-    @Inject
-    lateinit var storedDataService: StoredDataService
-
-    @Inject
-    lateinit var apiService: MangaApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appDeps.inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chapter_list)
 
-        intent?.let {
-            manga = it.getParcelableExtra(IntentKey.MANGA_DATA)
-        } ?: finish()
+        if (intent.hasExtra(IntentKey.MANGA_DATA)) {
+            manga = intent.getParcelableExtra(IntentKey.MANGA_DATA)
+        } else {
+            finish()
+        }
 
         chaptersAdapter = ChaptersAdapter(this, this, manga.hiddenComic, storedDataService, apiService)
         setCollapsingToolbarContent()
@@ -94,10 +93,10 @@ class ChapterListActivity: BaseActivity(), OnLoadDataListener, OnListItemClickLi
         binding.progressLoading.visibility = View.GONE
     }
 
-    override fun onError(errorMessage: String?) {
+    override fun onError(errorMessage: String) {
         binding.progressLoading.visibility = View.GONE
-        errorMessage?.let {
-            showAlert("Error", it, "Reload") { _, _ -> chaptersAdapter.loadChapters() }
+        showAlert("Error", errorMessage, "Reload") { _, _ ->
+            chaptersAdapter.loadChapters()
         }
     }
 }

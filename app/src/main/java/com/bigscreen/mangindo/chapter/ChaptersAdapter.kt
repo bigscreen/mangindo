@@ -16,24 +16,22 @@ import com.bigscreen.mangindo.network.model.response.ChapterListResponse
 import com.bigscreen.mangindo.network.service.MangaApiService
 import com.bigscreen.mangindo.stored.StoredDataService
 
-class ChaptersAdapter(var context: Context, var loadDataListener: OnLoadDataListener,
-                      var comicHiddenKey: String, var storedDataService: StoredDataService, var apiService: MangaApiService)
+class ChaptersAdapter(private val context: Context,
+                      private val loadDataListener: OnLoadDataListener,
+                      private val comicHiddenKey: String,
+                      private val storedDataService: StoredDataService,
+                      apiService: MangaApiService)
     : RecyclerView.Adapter<ChapterViewHolder>(), ChapterListLoader.OnLoadChapterListListener, ChapterViewHolder.OnChapterClickListener {
 
     private var chapterListLoader: ChapterListLoader = ChapterListLoader(apiService, this)
 
     var chapters: List<Chapter> = arrayListOf()
-        get() = field
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
     var listItemClickListener: OnListItemClickListener? = null
-        get() = field
-        set(value) {
-            field = value
-        }
 
     fun loadChapters() {
         chapterListLoader.loadChapterList(comicHiddenKey)
@@ -54,20 +52,17 @@ class ChaptersAdapter(var context: Context, var loadDataListener: OnLoadDataList
     fun getItem(position: Int): Chapter? = if (itemCount > 0 && position < itemCount) chapters[position] else null
 
     override fun onPrepareLoadData() {
-        Log.d(Constant.LOG_TAG, "load data...")
         loadDataListener.onPrepare()
     }
 
     override fun onSuccessLoadData(chapterListResponse: ChapterListResponse?) {
-        Log.d(Constant.LOG_TAG, "success load data \n" + chapterListResponse.toString())
         loadDataListener.onSuccess()
         chapterListResponse?.let { chapters = it.comics }
         storedDataService.saveChapterOfComic(comicHiddenKey, chapterListResponse)
     }
 
-    override fun onFailedLoadData(message: String?) {
-        Log.e(Constant.LOG_TAG, "failed load data, " + message)
-        message?.let { loadDataFromStoredService(it) }
+    override fun onFailedLoadData(message: String) {
+        loadDataFromStoredService(message)
     }
 
     override fun onChapterClick(position: Int) {
@@ -75,7 +70,7 @@ class ChaptersAdapter(var context: Context, var loadDataListener: OnLoadDataList
     }
 
     fun onParentDestroyed() {
-        chapterListLoader?.unSubscribe()
+        chapterListLoader.unSubscribe()
     }
 
     private fun loadDataFromStoredService(networkErrorMessage: String) {

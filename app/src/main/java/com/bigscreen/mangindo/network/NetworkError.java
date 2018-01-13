@@ -11,6 +11,7 @@ public class NetworkError {
     private static final int ERROR_SERVER = 1;
     private static final int ERROR_CONNECTION = 2;
 
+    public static final String MESSAGE_ERROR = "Something went wrong. Please try again.";
     private static final String MESSAGE_ERROR_SERVER = "Server error. Please try again.";
     private static final String MESSAGE_ERROR_CONNECTION = "Connection error. Please Try again.";
 

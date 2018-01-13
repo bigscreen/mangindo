@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView
 import com.bigscreen.mangindo.databinding.ItemChapterBinding
 
 
-class ChapterViewHolder(val binding: ItemChapterBinding, val clickListener: OnChapterClickListener): RecyclerView.ViewHolder(binding.root) {
+class ChapterViewHolder(private val binding: ItemChapterBinding,
+                        private val clickListener: OnChapterClickListener)
+    : RecyclerView.ViewHolder(binding.root) {
 
     init {
         itemView.setOnClickListener {

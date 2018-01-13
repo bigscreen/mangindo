@@ -3,7 +3,7 @@ package com.bigscreen.mangindo.info
 import com.bigscreen.mangindo.network.model.Manga
 
 
-class MangaInfoViewModel(var manga: Manga?) {
+class MangaInfoViewModel(private val manga: Manga?) {
 
     val authorName: String
         get() = manga?.author ?: "N/A"

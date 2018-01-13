@@ -9,7 +9,7 @@ import rx.subscriptions.CompositeSubscription
 
 class ChapterListLoader(var apiService: MangaApiService, var listener: OnLoadChapterListListener) {
 
-    val subscriptions: CompositeSubscription = CompositeSubscription()
+    private val subscriptions = CompositeSubscription()
 
     fun loadChapterList(mangaTitle: String) {
         listener.onPrepareLoadData()
@@ -19,6 +19,7 @@ class ChapterListLoader(var apiService: MangaApiService, var listener: OnLoadCha
             }
 
             override fun onError(networkError: NetworkError?) {
+                listener.onFailedLoadData(networkError?.errorMessage ?: NetworkError.MESSAGE_ERROR)
                 networkError?.let { listener.onFailedLoadData(it.errorMessage) }
             }
         })
@@ -34,6 +35,6 @@ class ChapterListLoader(var apiService: MangaApiService, var listener: OnLoadCha
 
         fun onSuccessLoadData(chapterListResponse: ChapterListResponse?)
 
-        fun onFailedLoadData(message: String?)
+        fun onFailedLoadData(message: String)
     }
 }
