@@ -1,21 +1,20 @@
 package com.bigscreen.mangindo.content
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bigscreen.mangindo.R
-import com.bigscreen.mangindo.databinding.FragmentMangaContentBinding
 import com.bigscreen.mangindo.listener.OnContentImageClickListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.GlideDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import kotlinx.android.synthetic.main.fragment_manga_content.imageManga
+import kotlinx.android.synthetic.main.fragment_manga_content.progressLoading
 import uk.co.senab.photoview.PhotoViewAttacher
-
 
 class MangaContentFragment : Fragment(), PhotoViewAttacher.OnViewTapListener {
 
@@ -30,19 +29,16 @@ class MangaContentFragment : Fragment(), PhotoViewAttacher.OnViewTapListener {
         }
     }
 
-    private lateinit var binding: FragmentMangaContentBinding
     private var fragmentPosition = 0
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.fragment_manga_content,
-                container, false)
-        return binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_manga_content, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.imageManga.setOnViewTapListener(this)
-        val imageUrl = arguments.getString(KEY_IMAGE_URL)
+        imageManga.setOnViewTapListener(this)
+        val imageUrl = arguments?.getString(KEY_IMAGE_URL).orEmpty()
         loadImage(imageUrl)
     }
 
@@ -53,21 +49,21 @@ class MangaContentFragment : Fragment(), PhotoViewAttacher.OnViewTapListener {
                 .listener(object : RequestListener<String, GlideDrawable> {
                     override fun onException(e: Exception, model: String, target: Target<GlideDrawable>,
                                              isFirstResource: Boolean): Boolean {
-                        binding.progressLoading.visibility = View.GONE
+                        progressLoading.visibility = View.GONE
                         return false
                     }
 
                     override fun onResourceReady(resource: GlideDrawable, model: String, target: Target<GlideDrawable>,
                                                  isFromMemoryCache: Boolean, isFirstResource: Boolean): Boolean {
-                        binding.progressLoading.visibility = View.GONE
+                        progressLoading.visibility = View.GONE
                         return false
                     }
                 })
-                .into(binding.imageManga)
+                .into(imageManga)
     }
 
     override fun onViewTap(view: View, x: Float, y: Float) {
-        if (view.id == R.id.image_manga) {
+        if (view.id == R.id.imageManga) {
             val listener = activity as OnContentImageClickListener
             listener.OnContentImageClick(fragmentPosition)
         }

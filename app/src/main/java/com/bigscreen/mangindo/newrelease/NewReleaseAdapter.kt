@@ -47,12 +47,12 @@ class NewReleaseAdapter(private val context: Context,
         newReleaseLoader.loadNewReleaseManga()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_new_release, parent, false)
         return NewReleaseViewHolder(view, context, this)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (searchKeyword.isEmpty())
             (holder as NewReleaseViewHolder).bindData(getItem(position))
         else

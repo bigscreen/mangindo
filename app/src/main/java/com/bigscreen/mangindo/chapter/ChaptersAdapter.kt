@@ -3,11 +3,9 @@ package com.bigscreen.mangindo.chapter
 import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bigscreen.mangindo.R
-import com.bigscreen.mangindo.common.Constant
 import com.bigscreen.mangindo.databinding.ItemChapterBinding
 import com.bigscreen.mangindo.listener.OnListItemClickListener
 import com.bigscreen.mangindo.listener.OnLoadDataListener
@@ -37,14 +35,14 @@ class ChaptersAdapter(private val context: Context,
         chapterListLoader.loadChapterList(comicHiddenKey)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ChapterViewHolder {
-        val binding: ItemChapterBinding = DataBindingUtil.inflate<ItemChapterBinding>(LayoutInflater.from(context),
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
+        val binding: ItemChapterBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.item_chapter, parent, false)
         return ChapterViewHolder(binding, this)
     }
 
-    override fun onBindViewHolder(holder: ChapterViewHolder?, position: Int) {
-        holder?.setViewModel(ChapterItemViewModel(context.resources, getItem(position)))
+    override fun onBindViewHolder(holder: ChapterViewHolder, position: Int) {
+        holder.setViewModel(ChapterItemViewModel(context.resources, getItem(position)))
     }
 
     override fun getItemCount(): Int = chapters.size

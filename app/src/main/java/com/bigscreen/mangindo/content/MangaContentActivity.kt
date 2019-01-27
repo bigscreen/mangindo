@@ -1,6 +1,5 @@
 package com.bigscreen.mangindo.content
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.util.Log
@@ -11,21 +10,20 @@ import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.base.BaseActivity
 import com.bigscreen.mangindo.common.Constant
 import com.bigscreen.mangindo.common.IntentKey
-import com.bigscreen.mangindo.databinding.ActivityMangaContentBinding
 import com.bigscreen.mangindo.listener.OnContentImageClickListener
 import com.bigscreen.mangindo.network.model.MangaImage
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse
 import com.bigscreen.mangindo.network.service.MangaApiService
 import com.bigscreen.mangindo.stored.StoredDataService
+import kotlinx.android.synthetic.main.activity_manga_content.pagerMangaImages
+import kotlinx.android.synthetic.main.activity_manga_content.progressLoading
 import javax.inject.Inject
-
 
 class MangaContentActivity : BaseActivity(), MangaContentLoader.OnLoadMangaContentListListener, OnContentImageClickListener {
 
     @Inject lateinit var storedDataService: StoredDataService
     @Inject lateinit var apiService: MangaApiService
 
-    private lateinit var binding: ActivityMangaContentBinding
     private lateinit var animSlideUp: Animation
     private lateinit var animSlideDown: Animation
     private lateinit var pagerAdapter: MangaContentPagerAdapter
@@ -39,7 +37,7 @@ class MangaContentActivity : BaseActivity(), MangaContentLoader.OnLoadMangaConte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appDeps.inject(this)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_manga_content)
+        setContentView(R.layout.activity_manga_content)
 
         if (intent.hasExtra(IntentKey.MANGA_KEY) && intent.hasExtra(IntentKey.MANGA_TITLE)
                 && intent.hasExtra(IntentKey.CHAPTER_KEY)) {
@@ -59,10 +57,10 @@ class MangaContentActivity : BaseActivity(), MangaContentLoader.OnLoadMangaConte
         setToolbarTitle(String.format("%s - %s", mangaTitle, chapterKey), true)
         setToolbarSubtitle(String.format(getString(R.string.page_), 1))
 
-        binding.pagerMangaImages.adapter = pagerAdapter
+        pagerMangaImages.adapter = pagerAdapter
         mangaContentLoader.loadContentList(mangaKey, chapterKey)
 
-        binding.pagerMangaImages.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        pagerMangaImages.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
 
@@ -81,21 +79,21 @@ class MangaContentActivity : BaseActivity(), MangaContentLoader.OnLoadMangaConte
     }
 
     override fun onPrepareLoadData() {
-        binding.progressLoading.visibility = View.VISIBLE
+        progressLoading.visibility = View.VISIBLE
     }
 
     override fun onSuccessLoadData(mangaContentListResponse: MangaContentListResponse) {
-        binding.progressLoading.visibility = View.GONE
+        progressLoading.visibility = View.GONE
         setContent(mangaContentListResponse.mangaImages ?: emptyList())
         storedDataService.saveContentOfComic(mangaKey, chapterKey, mangaContentListResponse)
     }
 
     override fun onFailedLoadData(message: String) {
-        binding.progressLoading.visibility = View.GONE
+        progressLoading.visibility = View.GONE
         storedDataService.pullStoredContentOfComic(mangaKey, chapterKey,
                 object : StoredDataService.OnGetSavedDataListener<MangaContentListResponse> {
                     override fun onDataFound(savedData: MangaContentListResponse) {
-                        binding.progressLoading.visibility = View.GONE
+                        progressLoading.visibility = View.GONE
                         setContent(savedData.mangaImages ?: emptyList())
                     }
 
