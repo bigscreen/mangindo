@@ -10,7 +10,7 @@
     <include layout="@layout/toolbar_main" />
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/layout_swipe_refresh"
+        android:id="@+id/layoutSwipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/grid_manga_new_release"
+                android:id="@+id/gridMangaNewRelease"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="vertical"
@@ -28,14 +28,14 @@
                 tools:listitem="@layout/item_new_release" />
 
             <ProgressBar
-                android:id="@+id/progress_loading"
+                android:id="@+id/progressLoading"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:visibility="gone" />
 
             <FrameLayout
-                android:id="@+id/layout_search"
+                android:id="@+id/layoutSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimaryOverlay"
@@ -54,7 +54,7 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/input_search"
+                        android:id="@+id/inputSearch"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -73,7 +73,7 @@
                         android:textSize="15sp" />
 
                     <ImageView
-                        android:id="@+id/image_clear_search"
+                        android:id="@+id/imageClearSearch"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:background="?selectableItemBackground"

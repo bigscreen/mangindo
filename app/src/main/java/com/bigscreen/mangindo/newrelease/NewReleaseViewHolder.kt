@@ -15,45 +15,46 @@ import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.network.model.Manga
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import kotlinx.android.synthetic.main.item_new_release.view.imageCover
+import kotlinx.android.synthetic.main.item_new_release.view.textChapter
+import kotlinx.android.synthetic.main.item_new_release.view.textTitle
 
 import java.util.regex.Pattern
 
-
-class NewReleaseViewHolder(itemView: View, private val context: Context,
-                           private val clickListener: OnMangaClickListener) : RecyclerView.ViewHolder(itemView) {
-
-    private lateinit var textTitle: TextView
-    private lateinit var textChapter: TextView
-    private lateinit var imageCover: ImageView
+class NewReleaseViewHolder(
+        itemView: View,
+        private val context: Context,
+        private val clickListener: OnMangaClickListener
+) : RecyclerView.ViewHolder(itemView) {
 
     init {
         inflateView()
     }
 
     private fun inflateView() {
-        textTitle = itemView.findViewById(R.id.text_title) as TextView
-        textChapter = itemView.findViewById(R.id.text_chapter) as TextView
-        imageCover = itemView.findViewById(R.id.image_cover) as ImageView
         itemView.setOnClickListener {
-            if (adapterPosition != NO_POSITION)
-                clickListener.onMangaClick(getAdapterPosition())
+            if (adapterPosition != NO_POSITION) clickListener.onMangaClick(adapterPosition)
         }
     }
 
     fun bindData(manga: Manga) {
-        textTitle.text = manga.title
-        textChapter.text = String.format(context.getString(R.string.chapter_), manga.hiddenNewChapter)
-        Glide.with(context).load(manga.comicIcon)
+        itemView.textTitle.text = manga.title
+        itemView.textChapter.text = String.format(
+                context.getString(R.string.chapter_),
+                manga.hiddenNewChapter
+        )
+        Glide.with(context)
+                .load(manga.comicIcon)
                 .placeholder(R.drawable.ic_load_image)
                 .error(R.drawable.ic_image_error)
                 .override(200, 200).centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .into(imageCover)
+                .into(itemView.imageCover)
     }
 
     fun bindDataSearch(manga: Manga, keyword: String) {
         bindData(manga)
-        textTitle.text = getSearchSpannedTitle(manga.title, keyword)
+        itemView.textTitle.text = getSearchSpannedTitle(manga.title, keyword)
     }
 
     private fun getSearchSpannedTitle(title: String, keyword: String): SpannableStringBuilder {

@@ -1,12 +1,10 @@
 package com.bigscreen.mangindo.chapter
 
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bigscreen.mangindo.R
-import com.bigscreen.mangindo.databinding.ItemChapterBinding
 import com.bigscreen.mangindo.listener.OnListItemClickListener
 import com.bigscreen.mangindo.listener.OnLoadDataListener
 import com.bigscreen.mangindo.network.model.Chapter
@@ -36,9 +34,8 @@ class ChaptersAdapter(private val context: Context,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterViewHolder {
-        val binding: ItemChapterBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
-                R.layout.item_chapter, parent, false)
-        return ChapterViewHolder(binding, this)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_chapter, parent, false)
+        return ChapterViewHolder(view, this)
     }
 
     override fun onBindViewHolder(holder: ChapterViewHolder, position: Int) {

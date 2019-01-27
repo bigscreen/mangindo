@@ -1,12 +1,13 @@
 package com.bigscreen.mangindo.chapter
 
 import android.support.v7.widget.RecyclerView
-import com.bigscreen.mangindo.databinding.ItemChapterBinding
+import android.view.View
+import kotlinx.android.synthetic.main.item_chapter.view.textChapter
+import kotlinx.android.synthetic.main.item_chapter.view.textChapterTitle
 
-
-class ChapterViewHolder(private val binding: ItemChapterBinding,
+class ChapterViewHolder(itemView: View,
                         private val clickListener: OnChapterClickListener)
-    : RecyclerView.ViewHolder(binding.root) {
+    : RecyclerView.ViewHolder(itemView) {
 
     init {
         itemView.setOnClickListener {
@@ -17,7 +18,8 @@ class ChapterViewHolder(private val binding: ItemChapterBinding,
     }
 
     fun setViewModel(viewModel: ChapterItemViewModel) {
-        binding.viewModel = viewModel
+        itemView.textChapter.text = viewModel.chapterText
+        itemView.textChapterTitle.text = viewModel.chapterTitle
     }
 
     interface OnChapterClickListener {

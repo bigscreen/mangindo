@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-
     defaultConfig {
         applicationId "com.bigscreen.mangindo"
         minSdkVersion 14
@@ -47,15 +46,6 @@ android {
     lintOptions {
         abortOnError false
     }
-    dataBinding {
-        enabled = true
-    }
-}
-
-static def getDate() {
-    def date = new Date()
-    def formattedDate = date.format('ddMMyyyy')
-    return formattedDate
 }
 
 dependencies {

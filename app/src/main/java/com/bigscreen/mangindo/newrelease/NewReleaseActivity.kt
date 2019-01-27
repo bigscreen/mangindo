@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -13,9 +12,6 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ProgressBar
 import android.widget.TextView
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.base.BaseActivity
@@ -25,8 +21,12 @@ import com.bigscreen.mangindo.listener.OnListItemClickListener
 import com.bigscreen.mangindo.listener.OnLoadDataListener
 import com.bigscreen.mangindo.network.service.MangaApiService
 import com.bigscreen.mangindo.stored.StoredDataService
+import kotlinx.android.synthetic.main.activity_new_release.gridMangaNewRelease
+import kotlinx.android.synthetic.main.activity_new_release.inputSearch
+import kotlinx.android.synthetic.main.activity_new_release.layoutSearch
+import kotlinx.android.synthetic.main.activity_new_release.layoutSwipeRefresh
+import kotlinx.android.synthetic.main.activity_new_release.progressLoading
 import javax.inject.Inject
-
 
 class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickListener {
 
@@ -37,13 +37,7 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
     @Inject lateinit var storedDataService: StoredDataService
     @Inject lateinit var mangaApiService: MangaApiService
 
-    private lateinit var layoutSwipeRefresh: SwipeRefreshLayout
-    private lateinit var gridMangaNewRelease: RecyclerView
-    private lateinit var progressLoading: ProgressBar
     private lateinit var newReleaseAdapter: NewReleaseAdapter
-
-    private lateinit var layoutSearch: FrameLayout
-    private lateinit var inputSearch: EditText
     private lateinit var animSlideUp: Animation
     private lateinit var animSlideDown: Animation
 
@@ -55,11 +49,6 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
         setContentView(R.layout.activity_new_release)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        layoutSwipeRefresh = findViewById(R.id.layout_swipe_refresh) as SwipeRefreshLayout
-        gridMangaNewRelease = findViewById(R.id.grid_manga_new_release) as RecyclerView
-        progressLoading = findViewById(R.id.progress_loading) as ProgressBar
-        layoutSearch = findViewById(R.id.layout_search) as FrameLayout
-        inputSearch = findViewById(R.id.input_search) as EditText
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim)
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim)
         newReleaseAdapter = NewReleaseAdapter(this, this, storedDataService, mangaApiService)
@@ -99,7 +88,7 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
 
     override fun setTitle(title: CharSequence) {
         super.setTitle(title)
-        val textTitle = findViewById(R.id.text_main_title) as TextView
+        val textTitle = findViewById<TextView>(R.id.text_main_title)
         textTitle.text = title
     }
 

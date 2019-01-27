@@ -22,7 +22,7 @@
             android:padding="4dp">
 
             <ImageView
-                android:id="@+id/image_cover"
+                android:id="@+id/imageCover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -32,7 +32,7 @@
                 tools:src="@drawable/ic_load_image" />
 
             <TextView
-                android:id="@+id/text_title"
+                android:id="@+id/textTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
@@ -46,7 +46,7 @@
                 tools:text="Bleach" />
 
             <TextView
-                android:id="@+id/text_chapter"
+                android:id="@+id/textChapter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
