@@ -19,8 +19,8 @@ class ChapterListLoader(var apiService: MangaApiService, var listener: OnLoadCha
             }
 
             override fun onError(networkError: NetworkError?) {
-                listener.onFailedLoadData(networkError?.errorMessage ?: NetworkError.MESSAGE_ERROR)
-                networkError?.let { listener.onFailedLoadData(it.errorMessage) }
+                listener.onFailedLoadData(networkError?.getErrorMessage() ?: NetworkError.MESSAGE_ERROR)
+                networkError?.let { listener.onFailedLoadData(it.getErrorMessage()) }
             }
         })
         subscriptions.add(subscription)

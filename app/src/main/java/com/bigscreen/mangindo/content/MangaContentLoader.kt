@@ -1,6 +1,6 @@
 package com.bigscreen.mangindo.content
 
-import com.bigscreen.mangindo.common.Utils
+import com.bigscreen.mangindo.common.extension.isNotAdsUrl
 import com.bigscreen.mangindo.network.NetworkError
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse
 import com.bigscreen.mangindo.network.service.MangaApiService
@@ -26,7 +26,7 @@ class MangaContentLoader(private val apiService: MangaApiService, private val li
             }
 
             override fun onError(networkError: NetworkError) {
-                listener.onFailedLoadData(networkError.errorMessage)
+                listener.onFailedLoadData(networkError.getErrorMessage())
             }
         })
         subscriptions.add(subscription)
@@ -34,7 +34,7 @@ class MangaContentLoader(private val apiService: MangaApiService, private val li
 
     private fun getNonAdsMangaContent(mangaContent: MangaContentListResponse): MangaContentListResponse {
         val images = mangaContent.mangaImages
-        val tempImages = images?.filter { Utils.isNotAdsUrl(it.url) }
+        val tempImages = images?.filter { it.url.isNotAdsUrl() }
         mangaContent.mangaImages = tempImages
         return mangaContent
     }

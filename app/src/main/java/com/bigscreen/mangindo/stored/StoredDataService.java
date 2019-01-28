@@ -1,12 +1,10 @@
 package com.bigscreen.mangindo.stored;
 
-
+import com.bigscreen.mangindo.common.extension.StringKt;
 import com.bigscreen.mangindo.network.model.response.ChapterListResponse;
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse;
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse;
 import com.google.gson.Gson;
-
-import static com.bigscreen.mangindo.common.Utils.isTextNotNullOrEmpty;
 
 public class StoredDataService {
 
@@ -30,7 +28,7 @@ public class StoredDataService {
 
     public void pullStoredNewReleasedComic(OnGetSavedDataListener<NewReleaseResponse> callback) {
         String responseString = preferenceService.getString(KEY_NEW_RELEASE, null);
-        if (isTextNotNullOrEmpty(responseString)) {
+        if (StringKt.isNotNullOrEmpty(responseString)) {
             callback.onDataFound(gson.fromJson(responseString, NewReleaseResponse.class));
         } else {
             callback.onDataNotFound();
@@ -46,7 +44,7 @@ public class StoredDataService {
     public void pullStoredChapterOfComic(String comicHiddenKey, OnGetSavedDataListener<ChapterListResponse> callback) {
         String formattedKey = String.format(KEY_CHAPTER_FORMAT, comicHiddenKey);
         String responseString = preferenceService.getString(formattedKey, null);
-        if (isTextNotNullOrEmpty(responseString)) {
+        if (StringKt.isNotNullOrEmpty(responseString)) {
             callback.onDataFound(gson.fromJson(responseString, ChapterListResponse.class));
         } else {
             callback.onDataNotFound();
@@ -63,7 +61,7 @@ public class StoredDataService {
                                          OnGetSavedDataListener<MangaContentListResponse> callback) {
         String formattedKey = String.format(KEY_CONTENT_FORMAT, comicHiddenKey, chapter);
         String responseString = preferenceService.getString(formattedKey, null);
-        if (isTextNotNullOrEmpty(responseString)) {
+        if (StringKt.isNotNullOrEmpty(responseString)) {
             callback.onDataFound(gson.fromJson(responseString, MangaContentListResponse.class));
         } else {
             callback.onDataNotFound();
