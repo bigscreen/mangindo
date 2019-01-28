@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.listener;
+package com.bigscreen.mangindo.common.listener;
 
 public interface OnListItemClickListener {
 

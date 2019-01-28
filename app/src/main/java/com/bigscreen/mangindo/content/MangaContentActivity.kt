@@ -14,10 +14,10 @@ import com.bigscreen.mangindo.common.IntentKey
 import com.bigscreen.mangindo.common.extension.setToolbarSubtitle
 import com.bigscreen.mangindo.common.extension.setToolbarTitle
 import com.bigscreen.mangindo.common.extension.showAlert
-import com.bigscreen.mangindo.listener.OnContentImageClickListener
+import com.bigscreen.mangindo.common.listener.OnContentImageClickListener
 import com.bigscreen.mangindo.network.model.MangaImage
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse
-import com.bigscreen.mangindo.network.service.MangaApiService
+import com.bigscreen.mangindo.repos.MangaRepository
 import com.bigscreen.mangindo.stored.StoredDataService
 import kotlinx.android.synthetic.main.activity_manga_content.pagerMangaImages
 import kotlinx.android.synthetic.main.activity_manga_content.progressLoading
@@ -26,7 +26,7 @@ import javax.inject.Inject
 class MangaContentActivity : BaseActivity(), MangaContentLoader.OnLoadMangaContentListListener, OnContentImageClickListener {
 
     @Inject lateinit var storedDataService: StoredDataService
-    @Inject lateinit var apiService: MangaApiService
+    @Inject lateinit var mangaRepository: MangaRepository
 
     private lateinit var animSlideUp: Animation
     private lateinit var animSlideDown: Animation
@@ -56,7 +56,7 @@ class MangaContentActivity : BaseActivity(), MangaContentLoader.OnLoadMangaConte
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim)
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim)
         pagerAdapter = MangaContentPagerAdapter(supportFragmentManager)
-        mangaContentLoader = MangaContentLoader(apiService, this)
+        mangaContentLoader = MangaContentLoader(mangaRepository, this)
 
         setToolbarTitle(String.format("%s - %s", mangaTitle, chapterKey), true)
         setToolbarSubtitle(String.format(getString(R.string.page_), 1))

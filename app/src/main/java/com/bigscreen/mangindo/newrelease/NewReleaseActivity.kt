@@ -22,9 +22,9 @@ import com.bigscreen.mangindo.common.extension.hideKeyboard
 import com.bigscreen.mangindo.common.extension.showAlert
 import com.bigscreen.mangindo.common.extension.showKeyboard
 import com.bigscreen.mangindo.common.extension.showToast
-import com.bigscreen.mangindo.listener.OnListItemClickListener
-import com.bigscreen.mangindo.listener.OnLoadDataListener
-import com.bigscreen.mangindo.network.service.MangaApiService
+import com.bigscreen.mangindo.common.listener.OnListItemClickListener
+import com.bigscreen.mangindo.common.listener.OnLoadDataListener
+import com.bigscreen.mangindo.repos.MangaRepository
 import com.bigscreen.mangindo.stored.StoredDataService
 import kotlinx.android.synthetic.main.activity_new_release.gridMangaNewRelease
 import kotlinx.android.synthetic.main.activity_new_release.inputSearch
@@ -40,7 +40,7 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
     }
 
     @Inject lateinit var storedDataService: StoredDataService
-    @Inject lateinit var mangaApiService: MangaApiService
+    @Inject lateinit var mangaRepository: MangaRepository
 
     private lateinit var newReleaseAdapter: NewReleaseAdapter
     private lateinit var animSlideUp: Animation
@@ -56,7 +56,7 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
 
         animSlideUp = AnimationUtils.loadAnimation(this, R.anim.slide_up_anim)
         animSlideDown = AnimationUtils.loadAnimation(this, R.anim.slide_down_anim)
-        newReleaseAdapter = NewReleaseAdapter(this, this, storedDataService, mangaApiService)
+        newReleaseAdapter = NewReleaseAdapter(this, this, storedDataService, mangaRepository)
 
         layoutSwipeRefresh.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorAccent))
         gridMangaNewRelease.adapter = newReleaseAdapter

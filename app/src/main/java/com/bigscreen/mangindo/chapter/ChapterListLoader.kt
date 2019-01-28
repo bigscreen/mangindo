@@ -1,28 +1,23 @@
 package com.bigscreen.mangindo.chapter
 
-import com.bigscreen.mangindo.network.NetworkError
+import com.bigscreen.mangindo.common.extension.subscribes
 import com.bigscreen.mangindo.network.model.response.ChapterListResponse
-import com.bigscreen.mangindo.network.service.MangaApiService
-import rx.Subscription
+import com.bigscreen.mangindo.repos.MangaRepository
 import rx.subscriptions.CompositeSubscription
 
-
-class ChapterListLoader(var apiService: MangaApiService, var listener: OnLoadChapterListListener) {
+class ChapterListLoader(
+        var repository: MangaRepository,
+        var listener: OnLoadChapterListListener
+) {
 
     private val subscriptions = CompositeSubscription()
 
     fun loadChapterList(mangaTitle: String) {
         listener.onPrepareLoadData()
-        val subscription: Subscription = apiService.getChapters(mangaTitle, object: MangaApiService.LoadChapterListCallback {
-            override fun onSuccess(response: ChapterListResponse?) {
-                response?.let { listener.onSuccessLoadData(it) } ?: listener.onFailedLoadData("Chapter tidak dapat ditemukan")
-            }
-
-            override fun onError(networkError: NetworkError?) {
-                listener.onFailedLoadData(networkError?.getErrorMessage() ?: NetworkError.MESSAGE_ERROR)
-                networkError?.let { listener.onFailedLoadData(it.getErrorMessage()) }
-            }
-        })
+        val subscription = repository.getChapters(mangaTitle).subscribes(
+                { listener.onSuccessLoadData(it) },
+                { listener.onFailedLoadData(it.getErrorMessage()) }
+        )
         subscriptions.add(subscription)
     }
 

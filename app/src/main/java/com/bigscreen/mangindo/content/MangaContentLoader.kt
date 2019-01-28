@@ -1,13 +1,15 @@
 package com.bigscreen.mangindo.content
 
-import com.bigscreen.mangindo.common.extension.isNotAdsUrl
-import com.bigscreen.mangindo.network.NetworkError
+import com.bigscreen.mangindo.common.extension.subscribes
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse
-import com.bigscreen.mangindo.network.service.MangaApiService
+import com.bigscreen.mangindo.repos.MangaRepository
 import rx.subscriptions.CompositeSubscription
 
 
-class MangaContentLoader(private val apiService: MangaApiService, private val listener: OnLoadMangaContentListListener) {
+class MangaContentLoader(
+        private val repository: MangaRepository,
+        private val listener: OnLoadMangaContentListListener
+) {
 
     private val subscriptions = CompositeSubscription()
 
@@ -17,26 +19,11 @@ class MangaContentLoader(private val apiService: MangaApiService, private val li
 
     fun loadContentList(mangaTitle: String, chapter: String) {
         listener.onPrepareLoadData()
-        val subscription = apiService.getMangaContent(mangaTitle, chapter, object : MangaApiService.LoadMangaContentListCallback {
-            override fun onSuccess(response: MangaContentListResponse?) {
-                if (response != null)
-                    listener.onSuccessLoadData(getNonAdsMangaContent(response))
-                else
-                    listener.onFailedLoadData("Cannot load chapter")
-            }
-
-            override fun onError(networkError: NetworkError) {
-                listener.onFailedLoadData(networkError.getErrorMessage())
-            }
-        })
+        val subscription = repository.getContents(mangaTitle, chapter).subscribes(
+                { listener.onSuccessLoadData(it.getNonAdsMangaContent()) },
+                { listener.onFailedLoadData(it.getErrorMessage()) }
+        )
         subscriptions.add(subscription)
-    }
-
-    private fun getNonAdsMangaContent(mangaContent: MangaContentListResponse): MangaContentListResponse {
-        val images = mangaContent.mangaImages
-        val tempImages = images?.filter { it.url.isNotAdsUrl() }
-        mangaContent.mangaImages = tempImages
-        return mangaContent
     }
 
     interface OnLoadMangaContentListListener {

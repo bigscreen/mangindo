@@ -1,31 +1,24 @@
 package com.bigscreen.mangindo.newrelease
 
-import com.bigscreen.mangindo.network.NetworkError
+import com.bigscreen.mangindo.common.extension.subscribes
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse
-import com.bigscreen.mangindo.network.service.MangaApiService
+import com.bigscreen.mangindo.repos.MangaRepository
 
 import rx.subscriptions.CompositeSubscription
 
-
-class NewReleaseLoader(private val apiService: MangaApiService, private val listener: OnLoadNewReleaseListener) {
+class NewReleaseLoader(
+        private val repository: MangaRepository,
+        private val listener: OnLoadNewReleaseListener
+) {
 
     private val subscriptions = CompositeSubscription()
 
     fun loadNewReleaseManga() {
         listener.onPrepareLoadData()
-        val subscription = apiService.getNewReleaseManga(object : MangaApiService.LoadMangaListCallback {
-
-            override fun onSuccess(response: NewReleaseResponse?) {
-                if (response != null)
-                    listener.onSuccessLoadData(response)
-                else
-                    listener.onFailedLoadData("Manga tidak dapat ditemukan")
-            }
-
-            override fun onError(networkError: NetworkError) {
-                listener.onFailedLoadData(networkError.getErrorMessage())
-            }
-        })
+        val subscription = repository.getNewReleased().subscribes(
+                { listener.onSuccessLoadData(it) },
+                { listener.onFailedLoadData(it.getErrorMessage()) }
+        )
         subscriptions.add(subscription)
     }
 

@@ -1,4 +1,4 @@
-package com.bigscreen.mangindo.custom
+package com.bigscreen.mangindo.common.custom
 
 import android.content.Context
 import android.util.AttributeSet

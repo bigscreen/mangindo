@@ -23,7 +23,7 @@
             app:expandedTitleTextAppearance="@style/CollapsingToolbarTextAppearance"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <com.bigscreen.mangindo.custom.TopCropImageView
+            <com.bigscreen.mangindo.common.custom.TopCropImageView
                 android:id="@+id/imageMangaCover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

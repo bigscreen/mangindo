@@ -6,18 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.stored.StoredDataService
-import com.bigscreen.mangindo.listener.OnListItemClickListener
-import com.bigscreen.mangindo.listener.OnLoadDataListener
+import com.bigscreen.mangindo.common.listener.OnListItemClickListener
+import com.bigscreen.mangindo.common.listener.OnLoadDataListener
 import com.bigscreen.mangindo.network.model.Manga
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse
-import com.bigscreen.mangindo.network.service.MangaApiService
+import com.bigscreen.mangindo.repos.MangaRepository
 import java.util.Collections
 
 class NewReleaseAdapter(
         private val context: Context,
         private val loadDataListener: OnLoadDataListener,
         private val storedDataService: StoredDataService,
-        apiService: MangaApiService
+        repository: MangaRepository
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         NewReleaseLoader.OnLoadNewReleaseListener,
         NewReleaseViewHolder.OnMangaClickListener {
@@ -27,7 +27,7 @@ class NewReleaseAdapter(
         const val SORT_BY_TITLE = 2
     }
 
-    private val newReleaseLoader = NewReleaseLoader(apiService, this)
+    private val newReleaseLoader = NewReleaseLoader(repository, this)
     private var backupMangaList = emptyList<Manga>()
     private var mangaList = emptyList<Manga>()
         set(value) {

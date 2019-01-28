@@ -13,7 +13,7 @@
         app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
         app:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <com.bigscreen.mangindo.custom.CustomTextView
+        <com.bigscreen.mangindo.common.custom.CustomTextView
             android:id="@+id/text_main_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

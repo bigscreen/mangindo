@@ -5,21 +5,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bigscreen.mangindo.R
-import com.bigscreen.mangindo.listener.OnListItemClickListener
-import com.bigscreen.mangindo.listener.OnLoadDataListener
+import com.bigscreen.mangindo.common.listener.OnListItemClickListener
+import com.bigscreen.mangindo.common.listener.OnLoadDataListener
 import com.bigscreen.mangindo.network.model.Chapter
 import com.bigscreen.mangindo.network.model.response.ChapterListResponse
-import com.bigscreen.mangindo.network.service.MangaApiService
+import com.bigscreen.mangindo.repos.MangaRepository
 import com.bigscreen.mangindo.stored.StoredDataService
 
 class ChaptersAdapter(private val context: Context,
                       private val loadDataListener: OnLoadDataListener,
                       private val comicHiddenKey: String,
                       private val storedDataService: StoredDataService,
-                      apiService: MangaApiService)
+                      repository: MangaRepository)
     : RecyclerView.Adapter<ChapterViewHolder>(), ChapterListLoader.OnLoadChapterListListener, ChapterViewHolder.OnChapterClickListener {
 
-    private var chapterListLoader: ChapterListLoader = ChapterListLoader(apiService, this)
+    private var chapterListLoader: ChapterListLoader = ChapterListLoader(repository, this)
 
     var chapters: List<Chapter> = arrayListOf()
         set(value) {

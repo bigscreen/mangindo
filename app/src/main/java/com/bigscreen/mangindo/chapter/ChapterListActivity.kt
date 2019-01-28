@@ -13,10 +13,10 @@ import com.bigscreen.mangindo.common.extension.setToolbarTitle
 import com.bigscreen.mangindo.common.extension.showAlert
 import com.bigscreen.mangindo.content.MangaContentActivity
 import com.bigscreen.mangindo.info.MangaInfoActivity
-import com.bigscreen.mangindo.listener.OnListItemClickListener
-import com.bigscreen.mangindo.listener.OnLoadDataListener
+import com.bigscreen.mangindo.common.listener.OnListItemClickListener
+import com.bigscreen.mangindo.common.listener.OnLoadDataListener
 import com.bigscreen.mangindo.network.model.Manga
-import com.bigscreen.mangindo.network.service.MangaApiService
+import com.bigscreen.mangindo.repos.MangaRepository
 import com.bigscreen.mangindo.stored.StoredDataService
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -30,7 +30,7 @@ import javax.inject.Inject
 class ChapterListActivity : BaseActivity(), OnLoadDataListener, OnListItemClickListener {
 
     @Inject lateinit var storedDataService: StoredDataService
-    @Inject lateinit var apiService: MangaApiService
+    @Inject lateinit var mangaRepository: MangaRepository
 
     private lateinit var chaptersAdapter: ChaptersAdapter
     private lateinit var manga: Manga
@@ -46,7 +46,7 @@ class ChapterListActivity : BaseActivity(), OnLoadDataListener, OnListItemClickL
             finish()
         }
 
-        chaptersAdapter = ChaptersAdapter(this, this, manga.hiddenComic, storedDataService, apiService)
+        chaptersAdapter = ChaptersAdapter(this, this, manga.hiddenComic, storedDataService, mangaRepository)
         setCollapsingToolbarContent()
         initRecyclerView()
         setToolbarTitle(manga.title, true)

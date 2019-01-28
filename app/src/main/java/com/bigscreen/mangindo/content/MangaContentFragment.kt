@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bigscreen.mangindo.R
-import com.bigscreen.mangindo.listener.OnContentImageClickListener
+import com.bigscreen.mangindo.common.listener.OnContentImageClickListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.GlideDrawable

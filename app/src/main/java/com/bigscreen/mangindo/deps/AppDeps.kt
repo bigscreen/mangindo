@@ -12,8 +12,7 @@ import javax.inject.Singleton
 @Component(modules = [
     AppModule::class,
     StoredDataModule::class,
-    NetworkModule::class,
-    MangaModule::class
+    NetworkModule::class
 ])
 interface AppDeps{
 
