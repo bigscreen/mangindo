@@ -1,13 +1,16 @@
 package com.bigscreen.mangindo.chapter
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.base.BaseActivity
 import com.bigscreen.mangindo.common.IntentKey
+import com.bigscreen.mangindo.common.extension.setToolbarTitle
+import com.bigscreen.mangindo.common.extension.showAlert
 import com.bigscreen.mangindo.content.MangaContentActivity
 import com.bigscreen.mangindo.info.MangaInfoActivity
 import com.bigscreen.mangindo.listener.OnListItemClickListener
@@ -96,8 +99,13 @@ class ChapterListActivity : BaseActivity(), OnLoadDataListener, OnListItemClickL
 
     override fun onError(errorMessage: String) {
         progressLoading.visibility = View.GONE
-        showAlert("Error", errorMessage, "Reload") { _, _ ->
-            chaptersAdapter.loadChapters()
-        }
+        showAlert(
+                "Oops!",
+                errorMessage,
+                "Reload",
+                DialogInterface.OnClickListener { _, _ ->
+                    chaptersAdapter.loadChapters()
+                }
+        )
     }
 }

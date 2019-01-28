@@ -1,7 +1,6 @@
 package com.bigscreen.mangindo.network.service;
 
-import android.support.annotation.NonNull;
-
+import androidx.annotation.NonNull;
 import com.bigscreen.mangindo.network.NetworkError;
 import com.bigscreen.mangindo.network.model.response.ChapterListResponse;
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse;

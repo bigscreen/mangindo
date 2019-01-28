@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.base.BaseActivity
 import com.bigscreen.mangindo.common.IntentKey
+import com.bigscreen.mangindo.common.extension.setToolbarTitle
 import com.bigscreen.mangindo.network.model.Manga
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy

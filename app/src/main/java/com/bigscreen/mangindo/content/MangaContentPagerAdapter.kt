@@ -1,9 +1,8 @@
 package com.bigscreen.mangindo.content
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
-
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 
 class MangaContentPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
@@ -14,10 +13,10 @@ class MangaContentPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(
         }
 
     override fun getItem(position: Int): Fragment? {
-        return if (count > 0 && position < count) {
-            val fragment = fragments[position]
-            fragment.setFragmentPosition(position)
-            fragment
+        return if (position in 0 until count) {
+            fragments[position].apply {
+                setFragmentPosition(position)
+            }
         } else {
             null
         }

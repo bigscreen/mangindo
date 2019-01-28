@@ -1,9 +1,9 @@
 package com.bigscreen.mangindo.chapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.listener.OnListItemClickListener
 import com.bigscreen.mangindo.listener.OnLoadDataListener

@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:elevation="4dp"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
+    app:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

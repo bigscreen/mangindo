@@ -1,15 +1,19 @@
 package com.bigscreen.mangindo.content
 
+import android.content.DialogInterface
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.viewpager.widget.ViewPager
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.base.BaseActivity
 import com.bigscreen.mangindo.common.Constant
 import com.bigscreen.mangindo.common.IntentKey
+import com.bigscreen.mangindo.common.extension.setToolbarSubtitle
+import com.bigscreen.mangindo.common.extension.setToolbarTitle
+import com.bigscreen.mangindo.common.extension.showAlert
 import com.bigscreen.mangindo.listener.OnContentImageClickListener
 import com.bigscreen.mangindo.network.model.MangaImage
 import com.bigscreen.mangindo.network.model.response.MangaContentListResponse
@@ -98,15 +102,20 @@ class MangaContentActivity : BaseActivity(), MangaContentLoader.OnLoadMangaConte
                     }
 
                     override fun onDataNotFound() {
-                        showAlert("Error", message, "Reload") { _, _ ->
-                            mangaContentLoader.loadContentList(mangaKey, chapterKey)
-                        }
+                        showAlert(
+                                "Error",
+                                message,
+                                "Reload",
+                                DialogInterface.OnClickListener { _, _ ->
+                                    mangaContentLoader.loadContentList(mangaKey, chapterKey)
+                                }
+                        )
                     }
                 })
     }
 
     override fun OnContentImageClick(position: Int) {
-        if (toolbar.visibility == View.VISIBLE)
+        if (toolbar?.visibility == View.VISIBLE)
             hideToolbar()
         else
             showToolbar()
@@ -119,24 +128,24 @@ class MangaContentActivity : BaseActivity(), MangaContentLoader.OnLoadMangaConte
     }
 
     private fun hideToolbar() {
-        if (toolbar.visibility == View.GONE) return
+        if (toolbar?.visibility == View.GONE) return
         animSlideUp.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {
             }
 
             override fun onAnimationEnd(animation: Animation) {
-                toolbar.visibility = View.GONE
+                toolbar?.visibility = View.GONE
             }
 
             override fun onAnimationRepeat(animation: Animation) {
             }
         })
-        toolbar.startAnimation(animSlideUp)
+        toolbar?.startAnimation(animSlideUp)
     }
 
     private fun showToolbar() {
-        if (toolbar.visibility == View.VISIBLE) return
-        toolbar.visibility = View.VISIBLE
-        toolbar.startAnimation(animSlideDown)
+        if (toolbar?.visibility == View.VISIBLE) return
+        toolbar?.visibility = View.VISIBLE
+        toolbar?.startAnimation(animSlideDown)
     }
 }

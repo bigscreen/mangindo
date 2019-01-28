@@ -8,7 +8,7 @@
     android:background="?selectableItemBackground"
     android:orientation="vertical">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textChapter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:textSize="17sp"
         tools:text="Chapter 200"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textChapterTitle"
         android:textStyle="bold"
         android:layout_width="wrap_content"

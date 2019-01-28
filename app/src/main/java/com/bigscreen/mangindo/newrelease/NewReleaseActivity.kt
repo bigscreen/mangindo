@@ -1,9 +1,9 @@
 package com.bigscreen.mangindo.newrelease
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v4.widget.SwipeRefreshLayout
+import androidx.core.content.ContextCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
@@ -13,10 +13,15 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.base.BaseActivity
 import com.bigscreen.mangindo.chapter.ChapterListActivity
 import com.bigscreen.mangindo.common.IntentKey
+import com.bigscreen.mangindo.common.extension.hideKeyboard
+import com.bigscreen.mangindo.common.extension.showAlert
+import com.bigscreen.mangindo.common.extension.showKeyboard
+import com.bigscreen.mangindo.common.extension.showToast
 import com.bigscreen.mangindo.listener.OnListItemClickListener
 import com.bigscreen.mangindo.listener.OnLoadDataListener
 import com.bigscreen.mangindo.network.service.MangaApiService
@@ -117,9 +122,14 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
     override fun onError(errorMessage: String) {
         layoutSwipeRefresh.isRefreshing = false
         progressLoading.visibility = View.GONE
-        showAlert("Error", errorMessage, "Reload") { _, _->
-            newReleaseAdapter.loadManga()
-        }
+        showAlert(
+                "Error",
+                errorMessage,
+                "Reload",
+                DialogInterface.OnClickListener {  _, _->
+                    newReleaseAdapter.loadManga()
+                }
+        )
     }
 
     override fun onDestroy() {
@@ -133,8 +143,8 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
         startActivity(intent)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
             R.id.action_search -> {
                 if (layoutSearch.visibility == View.VISIBLE) {
                     item.setIcon(R.drawable.ic_search_white)
@@ -175,7 +185,7 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
             override fun onAnimationEnd(animation: Animation) {
                 inputSearch.clearFocus()
                 layoutSearch.visibility = View.GONE
-                hideKeyboard()
+                this@NewReleaseActivity.hideKeyboard()
             }
 
             override fun onAnimationRepeat(animation: Animation) {
@@ -192,7 +202,7 @@ class NewReleaseActivity : BaseActivity(), OnLoadDataListener, OnListItemClickLi
 
             override fun onAnimationEnd(animation: Animation) {
                 inputSearch.requestFocus()
-                showKeyboard(inputSearch)
+                this@NewReleaseActivity.showKeyboard(inputSearch)
             }
 
             override fun onAnimationRepeat(animation: Animation) {

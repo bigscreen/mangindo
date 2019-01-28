@@ -2,15 +2,12 @@ package com.bigscreen.mangindo.newrelease
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.NO_POSITION
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.BackgroundColorSpan
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.network.model.Manga
 import com.bumptech.glide.Glide
@@ -18,7 +15,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.item_new_release.view.imageCover
 import kotlinx.android.synthetic.main.item_new_release.view.textChapter
 import kotlinx.android.synthetic.main.item_new_release.view.textTitle
-
 import java.util.regex.Pattern
 
 class NewReleaseViewHolder(

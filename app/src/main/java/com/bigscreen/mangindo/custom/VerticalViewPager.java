@@ -1,13 +1,13 @@
 package com.bigscreen.mangindo.custom;
 
 import android.content.Context;
-import android.support.v4.view.ViewConfigurationCompat;
-import android.support.v4.view.ViewPager;
+import androidx.core.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
+import androidx.viewpager.widget.ViewPager;
 
 public class VerticalViewPager extends ViewPager {
 

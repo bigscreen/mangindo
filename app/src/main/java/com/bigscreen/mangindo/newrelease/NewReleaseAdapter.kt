@@ -1,10 +1,9 @@
 package com.bigscreen.mangindo.newrelease
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
+import androidx.recyclerview.widget.RecyclerView
 import com.bigscreen.mangindo.R
 import com.bigscreen.mangindo.stored.StoredDataService
 import com.bigscreen.mangindo.listener.OnListItemClickListener
@@ -12,22 +11,21 @@ import com.bigscreen.mangindo.listener.OnLoadDataListener
 import com.bigscreen.mangindo.network.model.Manga
 import com.bigscreen.mangindo.network.model.response.NewReleaseResponse
 import com.bigscreen.mangindo.network.service.MangaApiService
-
-import java.util.ArrayList
 import java.util.Collections
 
-
-class NewReleaseAdapter(private val context: Context,
-                        private val loadDataListener: OnLoadDataListener,
-                        private val storedDataService: StoredDataService,
-                        apiService: MangaApiService)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>(), NewReleaseLoader.OnLoadNewReleaseListener, NewReleaseViewHolder.OnMangaClickListener {
+class NewReleaseAdapter(
+        private val context: Context,
+        private val loadDataListener: OnLoadDataListener,
+        private val storedDataService: StoredDataService,
+        apiService: MangaApiService
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+        NewReleaseLoader.OnLoadNewReleaseListener,
+        NewReleaseViewHolder.OnMangaClickListener {
 
     companion object {
         const val SORT_BY_DATE = 1
         const val SORT_BY_TITLE = 2
     }
-
 
     private val newReleaseLoader = NewReleaseLoader(apiService, this)
     private var backupMangaList = emptyList<Manga>()
@@ -139,24 +137,23 @@ class NewReleaseAdapter(private val context: Context,
     }
 
     private fun getBackupMangaList(): List<Manga> {
-        val tempMangaList = ArrayList(backupMangaList)
-        when (sortBy) {
+        return when (sortBy) {
             SORT_BY_DATE -> {
-                Collections.sort(tempMangaList) { manga, mangaComparator ->
+                backupMangaList.sortedWith(Comparator { manga, mangaComparator ->
                     val id = manga?.id ?: 0
                     val idComparator = mangaComparator?.id ?: 0
                     id - idComparator
-                }
+                })
             }
             SORT_BY_TITLE -> {
-                Collections.sort(tempMangaList) { manga, mangaComparator ->
+                backupMangaList.sortedWith(Comparator { manga, mangaComparator ->
                     val title = manga?.title?.toLowerCase() ?: ""
                     val titleComparator = mangaComparator?.title?.toLowerCase() ?: ""
                     title.compareTo(titleComparator)
-                }
+                })
             }
+            else -> emptyList()
         }
-        return tempMangaList
     }
 
 }
